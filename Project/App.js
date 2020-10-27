@@ -1,13 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View,Button } from 'react-native';
+import { NativeRouter, Switch, Route, Link } from "react-router-native";
+import Home from "./home";
+import Login from "./login";
+import Test from "./test";
+
 
 export default function App() {
   return (
+    <NativeRouter>
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Switch> 
+        <Route excat path="/" component={Home}/>
+        <Route exact path="/test" component={Test}/>
+        <Route exact path="/login" component={Login}/>
+      </Switch>
     </View>
+    </NativeRouter>
   );
 }
 
