@@ -1,9 +1,27 @@
-import React from "react";
-import { View, Text, Button } from "react-native";
+import React, {Component} from "react";
+import {StyleSheet, View, Text, Button } from "react-native";
 
-export default ({ history }) => (
-  <View>
-    <Text>This is the home page</Text>
-    <Button title="change page" onPress={() => history.push("/products")} />
-  </View>
-);
+export default class Home extends Component{
+  render(){
+    return(
+      <View style={styles.container}>
+        <Button title="Login" 
+        onPress={()=>this.props.navigation.navigate('Login')}>
+        </Button>
+
+        <Button title="Signup" 
+        onPress={()=>this.props.navigation.navigate('Signup')}>
+        </Button>
+      </View>
+
+    );
+  }
+}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center"
+  }
+});

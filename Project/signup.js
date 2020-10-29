@@ -3,7 +3,7 @@ import { Alert,Text, Button, TextInput, View, StyleSheet } from 'react-native';
 import{TouchableOpacity, TouchablePaity} from 'react-native-gesture-handler';
 
 
-export default class Login extends Component  {
+export default class Signup extends Component  {
 
   constructor(props) {
     super(props);
@@ -14,8 +14,8 @@ export default class Login extends Component  {
     };
   }
   
-  onLogin() {
-    const { email, password } = this.state;
+  onSignup() {
+    const { email, password,password2 } = this.state;
 
     Alert.alert('Credentials', `${email} + ${password}`);
   }
@@ -36,12 +36,19 @@ export default class Login extends Component  {
           secureTextEntry={true}
           style={styles.input}
         />
+        <TextInput
+          value={this.state.password}
+          onChangeText={(password2) => this.setState({ password2 })}
+          placeholder={'Retype Password'}
+          secureTextEntry={true}
+          style={styles.input}
+        />
         
         <TouchableOpacity>
         <Button
-          title={'Login'}
+          title={'Sumbit'}
           style={styles.input}
-         onPress={this.onLogin.bind(this)}       
+         onPress={this.onSignup.bind(this)}       
         />
         </TouchableOpacity>
       </View>

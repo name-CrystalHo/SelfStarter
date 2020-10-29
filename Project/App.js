@@ -1,31 +1,51 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View,Button } from 'react-native';
-import { NativeRouter, Switch, Route, Link } from "react-router-native";
+import React, {Component}from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { NativeRouter, Switch, Route } from "react-router-native";
+import {createStackNavigator} from '@react-navigation/stack';
+import{NavigationContainer} from '@react-navigation/native'
+import * as firebase from 'firebase'
+
+var firebaseConfig = {
+  apiKey: "AIzaSyAX7RhZr9bERxbUQ4X2497qQs7MFqpNJwE",
+  authDomain: "selfstarter-4720cki.firebaseapp.com",
+  databaseURL: "https://selfstarter-4720cki.firebaseio.com",
+  projectId: "selfstarter-4720cki",
+  storageBucket: "selfstarter-4720cki.appspot.com",
+  messagingSenderId: "881677061805",
+  appId: "1:881677061805:web:363f3ecef7e8823b6e8024",
+  measurementId: "G-J60CKP58KH"
+};
+// Initialize Firebase
+if (firebase.apps.length==0){ //should only be one
+firebase.initializeApp(firebaseConfig);
+}
+
 import Home from "./home";
 import Login from "./login";
-import Test from "./test";
+import Signup from "./signup";
 
+const Stack=createStackNavigator();
 
-export default function App() {
-  return (
-    <NativeRouter>
-    <View style={styles.container}>
-      <Switch> 
-        <Route excat path="/" component={Home}/>
-        <Route exact path="/test" component={Test}/>
-        <Route exact path="/login" component={Login}/>
-      </Switch>
-    </View>
-    </NativeRouter>
-  );
+export default class App extends Component {
+
+  render() {
+    return (
+        <NavigationContainer>
+          <Stack.Navigator intialRouteName="Home">
+            <Stack.Screen name="Home" component={Home}></Stack.Screen>
+            <Stack.Screen name="Login" component={Login}></Stack.Screen>
+            <Stack.Screen name="Signup" component={Signup}></Stack.Screen>
+          </Stack.Navigator>
+        </NavigationContainer>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center"
+  }
 });
