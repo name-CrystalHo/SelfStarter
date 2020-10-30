@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Alert,Text, Button, TextInput, View, StyleSheet } from 'react-native';
 import{TouchableOpacity, TouchablePaity} from 'react-native-gesture-handler';
 import * as firebase from 'firebase'
+import * as SecureStore from 'expo-secure-store'
   
 
 export default class Signup extends Component  {
@@ -54,7 +55,7 @@ export default class Signup extends Component  {
         
  
         <Button title={'Sumbit'}
-         onPress={this.createUser(this.state.email,this.state.password)}    
+        //  onPress={this.createUser(this.state.email,this.state.password)}    
         ></Button>
       </View>
     );
