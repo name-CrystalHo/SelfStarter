@@ -5,8 +5,24 @@ import * as SecureStore from 'expo-secure-store'
 import * as firebase from 'firebase'
 import Load from "./load"
 
+var firebaseConfig = {
+  apiKey: "AIzaSyAX7RhZr9bERxbUQ4X2497qQs7MFqpNJwE",
+  authDomain: "selfstarter-4720cki.firebaseapp.com",
+  databaseURL: "https://selfstarter-4720cki.firebaseapp.com/__/auth/handler",
+  projectId: "selfstarter-4720cki",
+  storageBucket: "selfstarter-4720cki.appspot.com",
+  messagingSenderId: "881677061805",
+  appId: "1:881677061805:web:363f3ecef7e8823b6e8024",
+  measurementId: "G-J60CKP58KH"
+};
+// Initialize Firebase
+if (firebase.apps.length==0){ //should only be one
+firebase.initializeApp(firebaseConfig);
+}
+
 const tokenKeyName='token'
 export default class Home extends Component{
+  
   constructor(){
     super()
     this.state={
@@ -29,22 +45,20 @@ export default class Home extends Component{
     });
   }
  
-  async saveTokenToSecureStorage(token){
-    await SecureStore.setItemAsync(tokenKeyName,_token)
-    this.setState({
-      token:_token,
-      // loading:false
-    })
-    SecureStore.setItemAsync('firebaseCredential', credential);
-    this.setState({
-      token: token,
-    });
-  }
+//Write token to secure storage and firebase credital.
+async saveTokenToSecureStorage(token, credential) {
+  SecureStore.setItemAsync('token', token);
+  //Save Firebase credential
+  SecureStore.setItemAsync('firebaseCredential', credential);
+  this.setState({
+    token: token,
+  });
+}
   async checkForToken(){
-    let token=await SecureStore.getItemAsync(tokenKeyName)
+    let token=await SecureStore.getItemAsync('token')
     this.setState(
       {
-        token:_token,
+        token:token,
         // loading:false
       }
     )
@@ -103,8 +117,8 @@ export default class Home extends Component{
       if (type === 'success') {
         // Get the user's name using Facebook's Graph API
         const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-        this.saveTokenToSecureStorage(token)
-        let credential= firebase.auth.FacebookAuthProvider.credential(token) //use to sign in
+        this.saveTokenToSecureStorage(token,credential)
+        let credential= firebase.auth.FacebookAuthProvider.credential(token); //use to sign in
         firebase.auth().signInWithCredential(credential).catch((error)=>{
           console.log("Auth failed and here is the error"+JSON.stringify(error))
         })
