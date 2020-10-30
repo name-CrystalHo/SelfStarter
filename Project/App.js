@@ -1,11 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import CreateWorkoutMenu from './CreateWorkoutMenu/CreateWorkoutMenu';
+import { View } from 'react-native';
+import MainMenuScreen from './MainMenu/MainMenuScreen';
 
 export default function App() {
-  return <CreateWorkoutMenu />;
-  
+  return <MainMenuScreen />;
 }
 
 
