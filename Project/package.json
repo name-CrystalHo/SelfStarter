@@ -8,10 +8,16 @@
     "eject": "expo eject"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.8.1",
     "@react-navigation/stack": "^5.11.0",
     "expo": "~39.0.2",
+=======
+    "@expo-google-fonts/inter": "^0.1.0",
+    "expo": "^39.0.3",
+    "expo-font": "~8.3.0",
+>>>>>>> createworkoutmenu
     "expo-status-bar": "~1.0.2",
     "firebase": "^8.0.0",
     "link": "^0.1.5",

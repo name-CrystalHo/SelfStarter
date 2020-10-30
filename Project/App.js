@@ -20,7 +20,7 @@ if (firebase.apps.length==0){ //should only be one
 firebase.initializeApp(firebaseConfig);
 }
 
-import Home from "./home";
+import Home from ".Componets/home";
 import Login from "./login";
 import Signup from "./signup";
 
