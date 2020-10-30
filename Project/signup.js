@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Alert,Text, Button, TextInput, View, StyleSheet } from 'react-native';
 import{TouchableOpacity, TouchablePaity} from 'react-native-gesture-handler';
-
+import * as firebase from 'firebase'
+  
 
 export default class Signup extends Component  {
 
@@ -13,11 +14,18 @@ export default class Signup extends Component  {
       password: '',
     };
   }
-  
+  createUser(email,password)
+  {
+    
+    firebase.database().ref('users/'+email).set(
+      email=email,
+      password=password
+    )
+  }
   onSignup() {
-    const { email, password,password2 } = this.state;
+    // const { email, password,password2 } = this.state;
 
-    Alert.alert('Credentials', `${email} + ${password}`);
+    Alert.alert('Created Account!')
   }
 
   render() {
@@ -37,20 +45,17 @@ export default class Signup extends Component  {
           style={styles.input}
         />
         <TextInput
-          value={this.state.password}
+          value={this.state.password2}
           onChangeText={(password2) => this.setState({ password2 })}
           placeholder={'Retype Password'}
           secureTextEntry={true}
           style={styles.input}
         />
         
-        <TouchableOpacity>
-        <Button
-          title={'Sumbit'}
-          style={styles.input}
-         onPress={this.onSignup.bind(this)}       
-        />
-        </TouchableOpacity>
+ 
+        <Button title={'Sumbit'}
+         onPress={this.createUser(this.state.email,this.state.password)}    
+        ></Button>
       </View>
     );
   }
