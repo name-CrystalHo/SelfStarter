@@ -8,7 +8,7 @@ function CreateWorkoutMenu(props) {
     return (
         <View style = {styles.container}>
             <View style = {styles.backContainer}>
-                <Image style = {styles.backButton} source={require('../CreateWorkoutMenu/backarrow.png')} />
+                <Image style = {styles.backButton} source={require('../assets/backarrow.png')} />
             </View>
             <Text style = {styles.titleText}>Create Workout</Text>
             <TextInput

@@ -6,7 +6,7 @@ function MainMenuScreen(props) {
     return (
         <View style ={styles.menu}>
             <View style = {styles.settingsContainer}>
-                <Image style = {styles.settingButton} source={require('../MainMenu/settings.png')} />
+                <Image style = {styles.settingButton} source={require('../assets/settings.png')} />
             </View>
             <Text style = {styles.titleText}>Your Workouts</Text>
             <View style = {styles.exerciseSelect}>
