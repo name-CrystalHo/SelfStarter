@@ -1,13 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 
 
-function SettingsMenu(props) {
+export default class SettingsMenu extends Component{
+    render(){
     return (
         <View style = {styles.container}>
-            <View style = {styles.backContainer}>
-                <Image style = {styles.backButton} source={require('../assets/backarrow.png')} />
-            </View>
             <Text style = {styles.titleText}>Account Settings</Text>
             <View style = {styles.settingsContainer}>
                 <Text style = {styles.settingsText}>Change Username</Text>
@@ -20,7 +18,7 @@ function SettingsMenu(props) {
         </View>
         
     );
-};
+}}
 
 const styles = StyleSheet.create({
     container: {
@@ -72,5 +70,3 @@ const styles = StyleSheet.create({
         marginTop: '10%'
     }
 });
-
-export default SettingsMenu;

@@ -103,7 +103,7 @@ async saveTokenToSecureStorage(token, credential) {
       return(
         <View style={styles.container}>
           <Text>Welcome to SelfStarter</Text>
-          <Button title="Go to Menu" onPress={()=>this.props.navigation.navigate('MainMenu')}></Button>
+          <Button title="Go to Menu" onPress={()=>this.props.navigation.navigate('Main Menu')}></Button>
         </View>     
       );//will be main menu
     }

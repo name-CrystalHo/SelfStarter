@@ -8,7 +8,9 @@ export default class MainMenuScreen extends Component  {
     return (
         <View style ={styles.menu}>
             <View style = {styles.settingsContainer}>
+                <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Settings')}>
                 <Image style = {styles.settingButton} source={require('../images/settings.png')} />
+                </TouchableOpacity>
             </View>
             <Text style = {styles.titleText}>Your Workouts</Text>
             <View style = {styles.exerciseSelect}>
@@ -16,7 +18,7 @@ export default class MainMenuScreen extends Component  {
             </View>
             
             <View style ={styles.newWorkoutButton}>
-             <TouchableOpacity  onPress={()=>this.props.navigation.navigate('CreateWorkout')}>
+             <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Create Workout')}>
                 <Text style = {styles.newWorkoutText}>Create New Workout</Text>
             </TouchableOpacity>
             </View>
