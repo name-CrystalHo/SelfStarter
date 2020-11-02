@@ -1,37 +1,42 @@
-import React, {Component} from "react";
+import React, {Component,useState} from "react";
 import { StyleSheet, Text, View, Switch, Image , TextInput} from 'react-native';
+
 
 export default class CreateWorkoutMenu extends Component  {
     constructor(){
         super();
         this.state={
             text:'',
-            isSwitchEnabled:false,
+            switchValue:false,
             
 
         }
     }
+
+    toggleSwitch = (value) => {
+        this.setState({switchValue: value})
+     }
+
+      
 render(){
     return (
         <View style = {styles.container}>
-            <View style = {styles.backContainer}>
-                <Image style = {styles.backButton} source={require('../images/backarrow.png')} />
-            </View>
             <Text style = {styles.titleText}>Create Workout</Text>
             <TextInput
+              value={this.state.text}
+              onChangeText={(text) => this.setState({text})}
                 style = {styles.textIn}
                 placeholder = 'Workout Name'
-                value={this.state.text}
-                onChangeText={(text) => this.setState({ text })}
-                defaultValue = {text}
+         
+               
 
             />
             <View style = {styles.switchContainer}>
                 <Text>TIME </Text>
-                <Switch 
-                    value = {this.state.isSwitchEnabled}
-                    onValueChange ={(value) => this.setState(value)}
-                />
+                <Switch
+                  value = {this.state.switchValue}
+                 onValueChange = {this.toggleSwitch}
+               />
                 <Text> REPS</Text>
             </View>
             {/*Use this container for the reminder time entry*/} 

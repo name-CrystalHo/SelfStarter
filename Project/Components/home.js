@@ -3,7 +3,7 @@ import {StyleSheet, View, Text, Button,Alert } from "react-native";
 import * as Facebook from 'expo-facebook';
 import * as SecureStore from 'expo-secure-store'
 import * as firebase from 'firebase'
-import MainMenuScreen from "./MainMenuScreen";
+
 
 
 var firebaseConfig = {
@@ -44,7 +44,6 @@ export default class Home extends Component{
       if (user != null) {
         console.log('We are authenticated now!');
         Alert.alert('We authneticated with Fireabse!', `Hi ${user}`);
-        this.setState({user:"Bitch"})
       }
     });
   }
@@ -103,7 +102,7 @@ async saveTokenToSecureStorage(token, credential) {
     else{
       return(
         <View style={styles.container}>
-          <Text>Welcome {JSON.stringify(this.state.user)}</Text>
+          <Text>Welcome to SelfStarter</Text>
           <Button title="Go to Menu" onPress={()=>this.props.navigation.navigate('MainMenu')}></Button>
         </View>     
       );//will be main menu
