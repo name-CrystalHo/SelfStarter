@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Alert,Text, Button, TextInput, View, StyleSheet } from 'react-native';
-import{TouchableOpacity, TouchablePaity} from 'react-native-gesture-handler';
+import{TouchableOpacity} from 'react-native-gesture-handler';
 
 
 export default class Login extends Component  {

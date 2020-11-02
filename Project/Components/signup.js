@@ -3,6 +3,7 @@ import { Alert,Text, Button, TextInput, View, StyleSheet } from 'react-native';
 import{TouchableOpacity, TouchablePaity} from 'react-native-gesture-handler';
 import * as firebase from 'firebase'
 import * as SecureStore from 'expo-secure-store'
+import * as  Home from "./home"
   
 
 export default class Signup extends Component  {

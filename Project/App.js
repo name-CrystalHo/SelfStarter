@@ -5,6 +5,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import{NavigationContainer} from '@react-navigation/native'
 import * as firebase from 'firebase'
 
+
 var firebaseConfig = {
   apiKey: "AIzaSyAX7RhZr9bERxbUQ4X2497qQs7MFqpNJwE",
   authDomain: "selfstarter-4720cki.firebaseapp.com",
@@ -19,22 +20,27 @@ var firebaseConfig = {
 if (firebase.apps.length==0){ //should only be one
 firebase.initializeApp(firebaseConfig);
 }
-
-import Home from ".Componets/home";
-import Login from "./login";
-import Signup from "./signup";
+import MainMenu from "./Components/MainMenuScreen"
+import CreateMenu from "./Components/CreateWorkoutMenu"
+import Home from "./Components/home";
+import Login from "./Components/login";
+import Signup from "./Components/signup";
 
 const Stack=createStackNavigator();
+
 
 export default class App extends Component {
 
   render() {
+
     return (
         <NavigationContainer>
           <Stack.Navigator intialRouteName="Home">
             <Stack.Screen name="Home" component={Home}></Stack.Screen>
             <Stack.Screen name="Login" component={Login}></Stack.Screen>
             <Stack.Screen name="Signup" component={Signup}></Stack.Screen>
+            <Stack.Screen name="MainMenu" component={MainMenu}></Stack.Screen>
+            <Stack.Screen name="CreateWorkout" component={CreateMenu}></Stack.Screen>
           </Stack.Navigator>
         </NavigationContainer>
     );

@@ -1,28 +1,36 @@
-import React from 'react';
+import React, {Component} from "react";
 import { StyleSheet, Text, View, Switch, Image , TextInput} from 'react-native';
 
-function CreateWorkoutMenu(props) {
-    const[isSwitchEnabled, setSwitch] = React.useState(false);
-    const[text, setText] = React.useState('');
+export default class CreateWorkoutMenu extends Component  {
+    constructor(){
+        super();
+        this.state={
+            text:'',
+            isSwitchEnabled:false,
+            
 
+        }
+    }
+render(){
     return (
         <View style = {styles.container}>
             <View style = {styles.backContainer}>
-                <Image style = {styles.backButton} source={require('../CreateWorkoutMenu/backarrow.png')} />
+                <Image style = {styles.backButton} source={require('../images/backarrow.png')} />
             </View>
             <Text style = {styles.titleText}>Create Workout</Text>
             <TextInput
                 style = {styles.textIn}
                 placeholder = 'Workout Name'
-                onChangeText = {(text) => setText(text)}
+                value={this.state.text}
+                onChangeText={(text) => this.setState({ text })}
                 defaultValue = {text}
 
             />
             <View style = {styles.switchContainer}>
                 <Text>TIME </Text>
                 <Switch 
-                    value = {isSwitchEnabled}
-                    onValueChange ={(value) => setSwitch(value)}
+                    value = {this.state.isSwitchEnabled}
+                    onValueChange ={(value) => this.setState(value)}
                 />
                 <Text> REPS</Text>
             </View>
@@ -39,7 +47,8 @@ function CreateWorkoutMenu(props) {
 
         </View>
     );
-};
+}
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -114,5 +123,3 @@ const styles = StyleSheet.create({
     },
 
 });
-
-export default CreateWorkoutMenu;

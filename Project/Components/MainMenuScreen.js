@@ -1,26 +1,31 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image} from 'react-native';
+import React, {Component} from "react";
+import { StyleSheet, Text, View, Image,Button} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
-function MainMenuScreen(props) {
+export default class MainMenuScreen extends Component  {
+    render(){
     return (
         <View style ={styles.menu}>
             <View style = {styles.settingsContainer}>
-                <Image style = {styles.settingButton} source={require('../MainMenu/settings.png')} />
+                <Image style = {styles.settingButton} source={require('../images/settings.png')} />
             </View>
             <Text style = {styles.titleText}>Your Workouts</Text>
             <View style = {styles.exerciseSelect}>
 
             </View>
+            
             <View style ={styles.newWorkoutButton}>
+             <TouchableOpacity  onPress={()=>this.props.navigation.navigate('CreateWorkout')}>
                 <Text style = {styles.newWorkoutText}>Create New Workout</Text>
+            </TouchableOpacity>
             </View>
         </View>
         
 
     );
 }
-
+}
 const styles = StyleSheet.create({
     menu: {
       flex: 1,
@@ -70,6 +75,3 @@ const styles = StyleSheet.create({
     }
   });
   
-
-
-export default MainMenuScreen;

@@ -3,7 +3,8 @@ import {StyleSheet, View, Text, Button,Alert } from "react-native";
 import * as Facebook from 'expo-facebook';
 import * as SecureStore from 'expo-secure-store'
 import * as firebase from 'firebase'
-import Load from "./load"
+import MainMenuScreen from "./MainMenuScreen";
+
 
 var firebaseConfig = {
   apiKey: "AIzaSyAX7RhZr9bERxbUQ4X2497qQs7MFqpNJwE",
@@ -15,6 +16,7 @@ var firebaseConfig = {
   appId: "1:881677061805:web:363f3ecef7e8823b6e8024",
   measurementId: "G-J60CKP58KH"
 };
+
 // Initialize Firebase
 if (firebase.apps.length==0){ //should only be one
 firebase.initializeApp(firebaseConfig);
@@ -27,6 +29,7 @@ export default class Home extends Component{
     super()
     this.state={
       token:null,
+      user:null
       // loading:true
     }
   }
@@ -41,6 +44,7 @@ export default class Home extends Component{
       if (user != null) {
         console.log('We are authenticated now!');
         Alert.alert('We authneticated with Fireabse!', `Hi ${user}`);
+        this.setState({user:"Bitch"})
       }
     });
   }
@@ -75,11 +79,12 @@ async saveTokenToSecureStorage(token, credential) {
     }
   }
   render(){
+    console.log(this.state.token)
     // if(this.state.loading===true)
     // {
     //   return (<Load/>)
     // }
-     if(this.state.token===null){
+ if(this.state.token===null){
     return(
      
       <View style={styles.container}>
@@ -96,7 +101,12 @@ async saveTokenToSecureStorage(token, credential) {
     );
     }
     else{
-      return(<Home/>) //will be main menu
+      return(
+        <View style={styles.container}>
+          <Text>Welcome {JSON.stringify(this.state.user)}</Text>
+          <Button title="Go to Menu" onPress={()=>this.props.navigation.navigate('MainMenu')}></Button>
+        </View>     
+      );//will be main menu
     }
   }
   //FACEBOOK LOGIN
