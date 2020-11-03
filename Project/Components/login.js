@@ -4,6 +4,7 @@ import{TouchableOpacity} from 'react-native-gesture-handler';
 import { firebase } from './config'
 
 
+
 export default class Login extends Component  {
 
   constructor(props) {
@@ -31,7 +32,7 @@ export default class Login extends Component  {
                         return;
                     }
                     const user = firestoreDocument.data()
-                    this.props.navigation.navigate('Main Menu')
+                    this.props.navigation.navigate('Home')
                 })
                 .catch(error => {
                     alert(error)
