@@ -31,7 +31,7 @@ export default class Login extends Component  {
                         return;
                     }
                     const user = firestoreDocument.data()
-                    this.props.navigation.navigate('Create Workout')
+                    this.props.navigation.navigate('Main Menu')
                 })
                 .catch(error => {
                     alert(error)

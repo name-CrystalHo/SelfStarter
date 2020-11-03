@@ -41,7 +41,7 @@ export default class Signup extends Component  {
                 .doc(uid)
                 .set(data)
                 .then(() => {
-                  this.props.navigation.navigate('Create Workout')
+                  this.props.navigation.navigate('Main Menu')
                 })
                 .catch((error) => {
                     alert(error)

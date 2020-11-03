@@ -88,7 +88,6 @@ export default class Home extends Component{
   render(){
     return (
       <View style={styles.container}>
-        <Button title="LogIn With Facebook" onPress={()=>this.logIn()}/>
         <Button title="Login" 
         onPress={()=>this.props.navigation.navigate('Login')}>
         </Button>
