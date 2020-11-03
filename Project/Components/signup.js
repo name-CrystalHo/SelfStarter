@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Alert,Text, Button, TextInput, View, StyleSheet } from 'react-native';
 import{TouchableOpacity, TouchablePaity} from 'react-native-gesture-handler';
-import * as firebase from 'firebase'
+import { firebase } from './config'
 import * as SecureStore from 'expo-secure-store'
 import * as  Home from "./home"
   
@@ -14,25 +14,66 @@ export default class Signup extends Component  {
     this.state = {
       email: '',
       password: '',
+      password2: '',
+      fullName: '',
     };
   }
-  createUser(email,password)
-  {
+  onRegisterPress = () => {
+    if (this.state.password !== this.state.password2) {
+        alert("Passwords don't match.")
+        return
+    }
+    email = this.state.email
+    fullName = this.state.fullName
+  
+    firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.state.email, this.state.password)
+        .then((response) => {
+            const uid = response.user.uid
+            const data = {
+                id: uid,
+                email,
+                fullName,
+            };
+            const usersRef = firebase.firestore().collection('users')
+            usersRef
+                .doc(uid)
+                .set(data)
+                .then(() => {
+                  this.props.navigation.navigate('Create Workout')
+                })
+                .catch((error) => {
+                    alert(error)
+                });
+        })
+        .catch((error) => {
+            alert(error)
+    });
+  }
+  // createUser(email,password)
+  // {
     
-    firebase.database().ref('users/'+email).set(
-      email=email,
-      password=password
-    )
-  }
-  onSignup() {
-    // const { email, password,password2 } = this.state;
+  //   firebase.database().ref('users/'+email).set(
+  //     email=email,
+  //     password=password
+  //   )
+  // }
+  // onSignup() {
+  //   // const { email, password,password2 } = this.state;
 
-    Alert.alert('Created Account!')
-  }
+  //   Alert.alert('Created Account!')
+  // }
 
   render() {
     return (
       <View style={styles.container}>
+        <TextInput
+          value={this.state.fullName}
+          onChangeText={(fullName) => this.setState({ fullName })}
+          placeholder={'FullName'}
+          style={styles.input}
+        />
         <TextInput
           value={this.state.email}
           onChangeText={(email) => this.setState({ email })}
@@ -55,9 +96,11 @@ export default class Signup extends Component  {
         />
         
  
-        <Button title={'Sumbit'}
-        //  onPress={this.createUser(this.state.email,this.state.password)}    
-        ></Button>
+        <Button 
+          onPress={this.onRegisterPress.bind(this)}
+          title="SignUp">
+          Press Me
+          </Button>
       </View>
     );
   }
@@ -78,4 +121,4 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     marginBottom: 10,
   },
-});
+}) ;

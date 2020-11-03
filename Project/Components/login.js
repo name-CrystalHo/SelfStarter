@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Alert,Text, Button, TextInput, View, StyleSheet } from 'react-native';
 import{TouchableOpacity} from 'react-native-gesture-handler';
+import { firebase } from './config'
 
 
 export default class Login extends Component  {
@@ -14,10 +15,31 @@ export default class Login extends Component  {
     };
   }
   
-  onLogin() {
-    const { email, password } = this.state;
-
-    Alert.alert('Credentials', `${email} + ${password}`);
+  onLoginPress = () => {
+    firebase
+        .auth()
+        .signInWithEmailAndPassword(this.state.email, this.state.password)
+        .then((response) => {
+            const uid = response.user.uid
+            const usersRef = firebase.firestore().collection('users')
+            usersRef
+                .doc(uid)
+                .get()
+                .then(firestoreDocument => {
+                    if (!firestoreDocument.exists) {
+                        alert("User does not exist anymore.")
+                        return;
+                    }
+                    const user = firestoreDocument.data()
+                    this.props.navigation.navigate('Create Workout')
+                })
+                .catch(error => {
+                    alert(error)
+                });
+        })
+        .catch(error => {
+            alert(error)
+        })
   }
 
   render() {
@@ -37,13 +59,11 @@ export default class Login extends Component  {
           style={styles.input}
         />
         
-        <TouchableOpacity>
         <Button
-          title={'Login'}
-          style={styles.input}
-         onPress={this.onLogin.bind(this)}       
-        />
-        </TouchableOpacity>
+          onPress={this.onLoginPress.bind(this)}
+          title="Login">
+          Press Me
+        </Button>
       </View>
     );
   }
