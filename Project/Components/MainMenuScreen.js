@@ -1,9 +1,41 @@
 import React, {Component} from "react";
-import { StyleSheet, Text, View, Image,Button} from 'react-native';
+import { StyleSheet, Text, View, Image,Button, FlatList} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { firebase } from './config'
 
 
 export default class MainMenuScreen extends Component  {
+
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            listOfWorkouts: [] ,
+        }
+      }
+
+    componentWillMount () {
+        const user = firebase.auth().currentUser;
+        const uid = user.uid;
+        const database = firebase.database();
+        //const items = database.ref("users/" + uid)
+        // var tempList = []
+        // items.on("value", snapshot =>{
+        //     tempList = snapshot.val()
+        // })
+        database.ref(('users/' + uid)).on('value', (snapshot) =>{
+            const tempList = []
+            snapshot.forEach((child) => {
+                tempList.push({
+                    key:child.key,
+                    name: child.val(),
+        
+                  })
+                })
+                this.setState({listOfWorkouts:tempList})
+            })        
+            
+    }
     render(){
     return (
         <View style ={styles.menu}>
@@ -13,18 +45,22 @@ export default class MainMenuScreen extends Component  {
                 </TouchableOpacity>
             </View>
             <Text style = {styles.titleText}>Your Workouts</Text>
-            <View style = {styles.exerciseSelect}>
-
-            </View>
-            
+            <FlatList
+                data={this.state.listOfWorkouts}
+                keyExtractor={(item)=>item.key}
+                renderItem={({item})=>{
+                    return(
+                        <View style={styles.item}>
+                        <Text style={styles.title}>{item.key}</Text>
+                      </View>)
+                    }}
+            />         
             <View style ={styles.newWorkoutButton}>
              <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Create Workout')}>
                 <Text style = {styles.newWorkoutText}>Create New Workout</Text>
             </TouchableOpacity>
             </View>
         </View>
-        
-
     );
 }
 }
@@ -74,6 +110,15 @@ const styles = StyleSheet.create({
     settingButton: {
         height: 40,
         width: 40
-    }
+    },
+    item: {
+        backgroundColor: '#f9c2ff',
+        padding: 20,
+        marginVertical: 8,
+        marginHorizontal: 16,
+      },
+      title: {
+        fontSize: 32,
+      },
   });
   
