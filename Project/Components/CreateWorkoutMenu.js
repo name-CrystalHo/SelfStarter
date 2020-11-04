@@ -1,12 +1,14 @@
 import React, {Component} from "react";
-import { StyleSheet, Text, View, Switch, Image , TextInput} from 'react-native';
+import { Content, Item,StyleSheet, Text, View, Switch, Image , TextInput,FlatList} from 'react-native';
 import Dialog, { DialogContent, DialogFooter, DialogButton} from 'react-native-popup-dialog';
 import { Button } from 'react-native'
+import { firebase } from './config'
+import {Container,List,ListItem, Icon} from 'native-base'
 
 
 export default class CreateWorkoutMenu extends Component  {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
             workoutText:'',
             switchValue:false,
@@ -14,13 +16,45 @@ export default class CreateWorkoutMenu extends Component  {
             numOfSetsText: '',
             numOfRepsText: '',
             restTimeText: '',
+            list:[]
         }
+    
     }
+    componentDidMount(){
+        const currentUser = firebase.auth().currentUser.uid;
+        firebase.database().ref((`users/${currentUser}`+'/'+this.state.workoutText)).on('value', (snapshot) =>{
+          var li = []
+          snapshot.forEach((child)=>{
+           li.push({
+            key:child.key,
+            name: child.val().exerciseName,
 
+          })
+        })
+       this.setState({list:li})
+      })
+      console.log(this.state.list)
+     }
+  
     toggleSwitch = (value) => {
         this.setState({switchValue: value})
-     }
-
+    }
+   
+    addNewExercise (){ 
+        const user = firebase.auth().currentUser;
+        const uid = user.uid;
+    
+        const database = firebase.database();
+        database.ref("users/"+uid + "/" + this.state.workoutText).push({
+          exerciseName: this.state.exerciseNameText,
+          numOfSets: this.state.numOfSetsText,
+          numOfReps: this.state.numOfRepsText,
+          restTime: this.state.restTimeText,
+        });
+        
+        this.setState({visible:false})
+       
+      }
       
 render(){
     return (
@@ -38,8 +72,8 @@ render(){
             <View style = {styles.switchContainer}>
                 <Text>TIME </Text>
                 <Switch
-                  value = {this.state.switchValue}
-                 onValueChange = {this.toggleSwitch}
+                    value = {this.state.switchValue}
+                    onValueChange = {this.toggleSwitch}
                />
                 <Text> REPS</Text>
             </View>
@@ -47,6 +81,16 @@ render(){
             <View style = {styles.reminderContainer}>
                 <Text>Set Reminder: </Text>
             </View>
+            <FlatList style={{width:'100%'}}
+          data={this.state.list}
+          keyExtractor={(item)=>item.key}
+          renderItem={({item})=>{
+             return(
+                <View>
+                   <Text>{item.name}</Text>
+                </View>)
+             }}/>
+ 
             <View style={styles.addExerciseButton}>
                 <Button
                     title="Add Exercise"
@@ -65,7 +109,7 @@ render(){
                         <DialogFooter>
                             
                           <DialogButton
-                            text="CANCEL"
+                            text="Cancel"
                             bordered
                             onPress={() => {
                                 this.setState({ visible: false });
@@ -76,11 +120,9 @@ render(){
                             bottom = {0}
                           />
                           <DialogButton
-                            text="OK"
+                            text="Add"
                             bordered
-                            onPress={() => {
-                                this.setState({ visible: false });
-                              }}
+                            onPress={this.addNewExercise.bind(this)}
                             key="button-2"
                             alignItems = 'bottom'
                             justifyContent = 'bottom'

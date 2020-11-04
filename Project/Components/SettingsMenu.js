@@ -1,8 +1,20 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image ,Button} from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import * as firebase from 'firebase'
+import * as SecureStore from 'expo-secure-store'
 
 
+
+  
 export default class SettingsMenu extends Component{
+
+    signout=()=>{
+         SecureStore.setItemAsync('token', null) // to clear the token 
+        this.props.navigation.navigate('Home')
+       
+     }
+   
     render(){
     return (
         <View style = {styles.container}>
@@ -13,7 +25,10 @@ export default class SettingsMenu extends Component{
                 <Text style = {styles.settingsText}>Change Change Notification Settings</Text>
             </View>
             <View style ={styles.logoutButton}>
+                <TouchableOpacity onPress={this.signout}>
                 <Text style = {styles.logoutText}>Log Out</Text>
+
+                </TouchableOpacity>
             </View>
         </View>
         
