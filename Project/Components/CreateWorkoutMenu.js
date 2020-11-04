@@ -20,21 +20,21 @@ export default class CreateWorkoutMenu extends Component  {
         }
     
     }
-    componentDidMount(){
-        const currentUser = firebase.auth().currentUser.uid;
-        firebase.database().ref((`users/${currentUser}`+'/'+this.state.workoutText)).on('value', (snapshot) =>{
-          var li = []
-          snapshot.forEach((child)=>{
-           li.push({
-            key:child.key,
-            name: child.val().exerciseName,
+    // componentDidMount(){
+    //     const currentUser = firebase.auth().currentUser.uid;
+    //     firebase.database().ref((`users/${currentUser}`+'/'+this.state.workoutText)).on('value', (snapshot) =>{
+    //       var li = []
+    //       snapshot.forEach((child)=>{
+    //        li.push({
+    //         key:child.key,
+    //         name: child.val().exerciseName,
 
-          })
-        })
-       this.setState({list:li})
-      })
-      console.log(this.state.list)
-     }
+    //       })
+    //     })
+    //    this.setState({list:li})
+    //   })
+    //   console.log(this.state.list)
+    //  }
   
     toggleSwitch = (value) => {
         this.setState({switchValue: value})
@@ -51,7 +51,10 @@ export default class CreateWorkoutMenu extends Component  {
           numOfReps: this.state.numOfRepsText,
           restTime: this.state.restTimeText,
         });
-        
+        this.state.list.push({
+            key: this.state.exerciseNameText,
+            name: this.state.exerciseNameText,
+        })
         this.setState({visible:false})
        
       }
@@ -81,15 +84,16 @@ render(){
             <View style = {styles.reminderContainer}>
                 <Text>Set Reminder: </Text>
             </View>
-            <FlatList style={{width:'100%'}}
-          data={this.state.list}
-          keyExtractor={(item)=>item.key}
-          renderItem={({item})=>{
-             return(
-                <View>
-                   <Text>{item.name}</Text>
-                </View>)
-             }}/>
+            <FlatList
+                data={this.state.list}
+                keyExtractor={(item)=>item.key}
+                renderItem={({item})=>{
+                    return(
+                        <View style={styles.item}>
+                        <Text style={styles.title}>{item.key}</Text>
+                      </View>)
+                    }}
+            />      
  
             <View style={styles.addExerciseButton}>
                 <Button
@@ -280,5 +284,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#A9A9B0'
         
     },
+    item: {
+        backgroundColor: '#f9c2ff',
+        padding: 20,
+        marginVertical: 8,
+        marginHorizontal: 16,
+      },
+      title: {
+        fontSize: 32,
+      },
 
 });
