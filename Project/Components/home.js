@@ -6,6 +6,7 @@ import * as firebase from 'firebase'
 import MainMenuScreen from "./MainMenuScreen";
 
 
+
 var firebaseConfig = {
   apiKey: "AIzaSyAX7RhZr9bERxbUQ4X2497qQs7MFqpNJwE",
   authDomain: "selfstarter-4720cki.firebaseapp.com",
@@ -22,66 +23,11 @@ firebase.initializeApp(firebaseConfig);
 }
 
 const tokenKeyName='token'
+
 export default class Home extends Component{
   
-  constructor(){
-    super()
-    this.state={
-      token:null,
-      // loading:true
-    }
-  }
-
-  componentDidMount() {
-    setTimeout(() => {
-      this.checkForToken();
-    }, 2000);
-    this.checkForFirebaseCredential();
-    // Listen for authentication state to change.
-    firebase.auth().onAuthStateChanged(user => {
-      if (user != null) {
-        // console.log('We are authenticated now!');
-        // Alert.alert('We authneticated with Fireabse!', `Hi ${user}`);
-      }
-    });
-  }
  
-//Write token to secure storage and firebase credital.
-async saveTokenToSecureStorage(token, credential) {
-  SecureStore.setItemAsync('token', token);
-  //Save Firebase credential
-  SecureStore.setItemAsync('firebaseCredential', credential);
-  this.setState({
-    token: token,
-  });
-}
-  async checkForToken(){
-    let token=await SecureStore.getItemAsync('token')
-    this.setState(
-      {
-        token:token,
-        // loading:false
-      }
-    )
-  }
-  async checkForFirebaseCredential() {
-    let credential = await SecureStore.getItemAsync('firebaseCredential');
-    if (credential) {
-      firebase
-        .auth()
-        .signInWithCredential(credential)
-        .catch(error => {
-          console.log('Auth failed and here the error' + JSON.stringify(error));
-        });
-    }
-  }
   render(){
-
-    // if(this.state.loading===true)
-    // {
-    //   return (<Load/>)
-    // }
- if(this.state.token===null){
     return(
      
       <View style={styles.container}>
@@ -95,19 +41,8 @@ async saveTokenToSecureStorage(token, credential) {
       </View>
 
     );
+
     }
-    else{
-      return(
-        <View style={styles.container}>
-          <Text>Welcome to SelfStarter</Text>
-          <Button title="Go to Main Menu" 
-        onPress={()=>this.props.navigation.navigate('Main Menu')}>
-        </Button>
-        </View>
-      ) 
-    }
-  }
- 
 }
 
 const styles = StyleSheet.create({
