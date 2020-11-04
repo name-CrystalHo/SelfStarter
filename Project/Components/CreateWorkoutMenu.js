@@ -22,7 +22,7 @@ export default class CreateWorkoutMenu extends Component  {
         this.setState({switchValue: value})
     }
    
-    addNewExercise = () => { 
+    addNewExercise (){ 
         const user = firebase.auth().currentUser;
         const uid = user.uid;
         const database = firebase.database();
@@ -36,6 +36,8 @@ export default class CreateWorkoutMenu extends Component  {
         // this.setState({
         //   presentToDo: '',
         // });
+        this.setState({visible:false})
+       
       }
       
 render(){
@@ -81,7 +83,7 @@ render(){
                         <DialogFooter>
                             
                           <DialogButton
-                            text="Done"
+                            text="Cancel"
                             bordered
                             onPress={() => {
                                 this.setState({ visible: false });
