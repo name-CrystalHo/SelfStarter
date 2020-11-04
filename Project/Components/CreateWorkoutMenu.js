@@ -2,11 +2,12 @@ import React, {Component} from "react";
 import { StyleSheet, Text, View, Switch, Image , TextInput} from 'react-native';
 import Dialog, { DialogContent, DialogFooter, DialogButton} from 'react-native-popup-dialog';
 import { Button } from 'react-native'
+import { firebase } from './config'
 
 
 export default class CreateWorkoutMenu extends Component  {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state={
             workoutText:'',
             switchValue:false,
@@ -14,13 +15,28 @@ export default class CreateWorkoutMenu extends Component  {
             numOfSetsText: '',
             numOfRepsText: '',
             restTimeText: '',
-        }
+        };
     }
 
     toggleSwitch = (value) => {
         this.setState({switchValue: value})
-     }
-
+    }
+   
+    addNewExercise = () => { 
+        const user = firebase.auth().currentUser;
+        const uid = user.uid;
+        const database = firebase.database();
+        database.ref("users/"+uid + "/" + this.state.workoutText).push({
+          exerciseName: this.state.exerciseNameText,
+          numOfSets: this.state.numOfSetsText,
+          numOfReps: this.state.numOfRepsText,
+          restTime: this.state.restTimeText,
+        });
+        //Alert.alert('Action!', 'A new exercise was added');
+        // this.setState({
+        //   presentToDo: '',
+        // });
+      }
       
 render(){
     return (
@@ -38,8 +54,8 @@ render(){
             <View style = {styles.switchContainer}>
                 <Text>TIME </Text>
                 <Switch
-                  value = {this.state.switchValue}
-                 onValueChange = {this.toggleSwitch}
+                    value = {this.state.switchValue}
+                    onValueChange = {this.toggleSwitch}
                />
                 <Text> REPS</Text>
             </View>
@@ -65,7 +81,7 @@ render(){
                         <DialogFooter>
                             
                           <DialogButton
-                            text="CANCEL"
+                            text="Done"
                             bordered
                             onPress={() => {
                                 this.setState({ visible: false });
@@ -76,11 +92,9 @@ render(){
                             bottom = {0}
                           />
                           <DialogButton
-                            text="OK"
+                            text="Add"
                             bordered
-                            onPress={() => {
-                                this.setState({ visible: false });
-                              }}
+                            onPress={this.addNewExercise.bind(this)}
                             key="button-2"
                             alignItems = 'bottom'
                             justifyContent = 'bottom'
