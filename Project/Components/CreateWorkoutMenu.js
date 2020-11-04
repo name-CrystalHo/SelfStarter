@@ -1,8 +1,9 @@
 import React, {Component} from "react";
-import { StyleSheet, Text, View, Switch, Image , TextInput} from 'react-native';
+import { Content, Item,StyleSheet, Text, View, Switch, Image , TextInput,FlatList} from 'react-native';
 import Dialog, { DialogContent, DialogFooter, DialogButton} from 'react-native-popup-dialog';
 import { Button } from 'react-native'
 import { firebase } from './config'
+import {Container,List,ListItem, Icon} from 'native-base'
 
 
 export default class CreateWorkoutMenu extends Component  {
@@ -15,9 +16,26 @@ export default class CreateWorkoutMenu extends Component  {
             numOfSetsText: '',
             numOfRepsText: '',
             restTimeText: '',
-        };
+            list:[]
+        }
+    
     }
+    componentDidMount(){
+        const currentUser = firebase.auth().currentUser.uid;
+        firebase.database().ref((`users/${currentUser}`+'/'+this.state.workoutText)).on('value', (snapshot) =>{
+          var li = []
+          snapshot.forEach((child)=>{
+           li.push({
+            key:child.key,
+            name: child.val().exerciseName,
 
+          })
+        })
+       this.setState({list:li})
+      })
+      console.log(this.state.list)
+     }
+  
     toggleSwitch = (value) => {
         this.setState({switchValue: value})
     }
@@ -25,6 +43,7 @@ export default class CreateWorkoutMenu extends Component  {
     addNewExercise (){ 
         const user = firebase.auth().currentUser;
         const uid = user.uid;
+    
         const database = firebase.database();
         database.ref("users/"+uid + "/" + this.state.workoutText).push({
           exerciseName: this.state.exerciseNameText,
@@ -32,10 +51,7 @@ export default class CreateWorkoutMenu extends Component  {
           numOfReps: this.state.numOfRepsText,
           restTime: this.state.restTimeText,
         });
-        //Alert.alert('Action!', 'A new exercise was added');
-        // this.setState({
-        //   presentToDo: '',
-        // });
+        
         this.setState({visible:false})
        
       }
@@ -65,6 +81,16 @@ render(){
             <View style = {styles.reminderContainer}>
                 <Text>Set Reminder: </Text>
             </View>
+            <FlatList style={{width:'100%'}}
+          data={this.state.list}
+          keyExtractor={(item)=>item.key}
+          renderItem={({item})=>{
+             return(
+                <View>
+                   <Text>{item.name}</Text>
+                </View>)
+             }}/>
+ 
             <View style={styles.addExerciseButton}>
                 <Button
                     title="Add Exercise"
