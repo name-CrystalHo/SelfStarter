@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import { Content, Item,StyleSheet, Text, View, Switch, Image , TextInput,FlatList} from 'react-native';
 import Dialog, { DialogContent, DialogFooter, DialogButton} from 'react-native-popup-dialog';
 import { Button } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { firebase } from './config'
 import {Container,List,ListItem, Icon} from 'native-base'
 
@@ -188,7 +189,9 @@ render(){
                 </Dialog>
             </View>
             <View style ={styles.finishButton}>
+            <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Main Menu')}>
                 <Text style = {styles.finishText}>Finish</Text>
+            </TouchableOpacity>
             </View>
 
         </View>
