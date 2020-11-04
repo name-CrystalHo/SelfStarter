@@ -32,6 +32,16 @@ const Stack=createStackNavigator();
 
 
 export default class App extends Component {
+   
+  // constructor(props){
+  //   super(props)
+  //   this.state={
+  //     token:null,
+  //   }
+  // }
+  //  updateState(token){
+  //   this.setState({token})
+  // }
 
   render() {
 
