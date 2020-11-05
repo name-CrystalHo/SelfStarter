@@ -23,11 +23,31 @@ firebase.initializeApp(firebaseConfig);
 }
 
 const tokenKeyName='token'
-
+const userLogged = false;
 export default class Home extends Component{
-  
+  constructor(props){
+    super(props)
+    this.state={
+      userLogged:false,
+    }
+  }
+  componentWillMount(){
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+      this.setState({
+        userLogged:true
+      });
+      }
+      else{
+        this.setState({
+          userLogged:false
+        });
+      }
+   });
+  }
  
   render(){
+    if(this.state.userLogged===false){
     return(
      
       <View style={styles.container}>
@@ -39,10 +59,20 @@ export default class Home extends Component{
         onPress={()=>this.props.navigation.navigate('Signup')}>
         </Button>
       </View>
-
     );
-
     }
+    else{
+      return(
+      <View style={styles.container}>
+        <Text>Welcome to SelfStarter</Text>
+        <Button title="Go to Main Menu" 
+        onPress={()=>this.props.navigation.navigate('Main Menu')}>
+        </Button>
+      </View>
+      )
+    }
+  }
+ 
 }
 
 const styles = StyleSheet.create({
