@@ -117,9 +117,12 @@ export default class WorkingOutScreen extends Component  {
                 </View>
 
                 <View style ={styles.startButton}>
-                    <TouchableOpacity  onPress={()=>this.fetch()}>
+                    <Button
+                    title="Next Excercise"
+                    onPress={()=>this.fetch()}></Button>
+                    {/* <TouchableOpacity  onPress={()=>this.fetch()}>
                         <Text style = {styles.startText}>Next Excercise</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             </View>
         );
@@ -153,7 +156,7 @@ const styles = StyleSheet.create({
     startButton: {
         width: '45%',
         height: 50,
-        backgroundColor: "#A9A9B0", 
+        // backgroundColor: "#A9A9B0", 
         alignItems: "center",
         justifyContent: "center",
         position: 'absolute',

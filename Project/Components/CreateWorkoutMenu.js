@@ -212,9 +212,11 @@ render(){
                 </Dialog>
             </View>
             <View style ={styles.finishButton}>
-            <TouchableOpacity  onPress={()=>this.finishButton()}>
+                <Button  onPress={()=>this.finishButton()}
+                title="Finish"></Button>
+            {/* <TouchableOpacity  onPress={()=>this.finishButton()}>
                 <Text style = {styles.finishText}>Finish</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             </View>
 
         </View>
@@ -273,7 +275,7 @@ const styles = StyleSheet.create({
     finishButton: {
         width: '45%',
         height: 50,
-        backgroundColor: "#A9A9B0", 
+        // backgroundColor: "#A9A9B0", 
         alignItems: "center",
         justifyContent: "center",
         position: 'absolute',
@@ -287,7 +289,7 @@ const styles = StyleSheet.create({
     addExerciseButton: {
         width: '55%',
         height: 50,
-        backgroundColor: "#A9A9B0", 
+        // backgroundColor: "#A9A9B0", 
         alignItems: "center",
         justifyContent: "center",
         position: 'absolute',

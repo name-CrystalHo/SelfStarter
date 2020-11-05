@@ -53,24 +53,33 @@ export default class MainMenuScreen extends Component  {
                 renderItem={({item})=>{
                     return(
                         <View style={styles.startWorkout}>
-                        <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Start Workout', {workoutName: item.key})}>
+                            <Button
+                            color="#ff5c5c"
+                             onPress={()=>this.props.navigation.navigate('Start Workout', {workoutName: item.key})}
+                             title={item.key}
+                            ></Button>
+                        {/* <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Start Workout', {workoutName: item.key})}>
                             <Text style={styles.workoutName}>{item.key}</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                       </View>)
                     }}
             /> 
             </View>        
 
-            <View style ={styles.newWorkoutButton}>
-            <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Create Workout')}>
+            <View style={styles.workoutButton}>
+            <Button style = {styles.newWorkoutText} onPress={()=>this.props.navigation.navigate('Create Workout')} title="Create New Workout"></Button>
+            {/* <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Create Workout')}>
                 <Text style = {styles.newWorkoutText}>Create New Workout</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             </View>
         </View>
     );
 }
 }
 const styles = StyleSheet.create({
+    workoutButton:{
+        marginTop:"2%"
+    },
     menu: {
       flex: 1,
       backgroundColor: '#fff',
@@ -82,13 +91,13 @@ const styles = StyleSheet.create({
     newWorkoutButton: {
         width: '55%',
         height: 50,
-        backgroundColor: "#A9A9B0", 
+        backgroundColor: "red", 
         alignItems: "center",
         justifyContent: "center",
         marginTop: '7%'
     },
     newWorkoutText: {
-       color: '#61D4D4',
+       backgroundColor: '#61D4D4',
        fontWeight: 'bold',
        fontSize: 18
     },
@@ -110,14 +119,15 @@ const styles = StyleSheet.create({
     settingsContainer: {
         width: '93%',
         height: 50,
-        justifyContent: "flex-start"
+        justifyContent: "flex-start",
+        marginTop:"4%"
     },
     settingButton: {
         height: 40,
         width: 40
     },
     startWorkout: {
-        backgroundColor: '#A9A9B0',
+        borderColor: 'blue',
         padding: 10,
         marginVertical: 8,
         marginHorizontal: 16,
@@ -127,7 +137,8 @@ const styles = StyleSheet.create({
     },
     workoutName: {
        fontWeight: 'bold',
-       fontSize: 18
+       fontSize: 18,
+       width:"10%"
     },
   });
   

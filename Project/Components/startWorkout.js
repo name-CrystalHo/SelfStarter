@@ -51,9 +51,12 @@ export default class StartWorkoutScreen extends Component  {
                 />   
                 </View>
                  <View style ={styles.startButton}>
-                    <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Working Out', {workoutName: this.state.workoutName})}>
+                     <Button
+                     title="Start Workout"
+                     onPress={()=>this.props.navigation.navigate('Working Out', {workoutName: this.state.workoutName})}></Button>
+                    {/* <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Working Out', {workoutName: this.state.workoutName})}>
                         <Text style = {styles.startText}>Start Workout</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             
             </View>
@@ -76,7 +79,7 @@ const styles = StyleSheet.create({
         marginTop: '3%'
     },
     item: {
-        backgroundColor: '#A9A9B0',
+        backgroundColor: "#ff5c5c",
         padding: 10,
         marginVertical: 8,
         marginHorizontal: 16,
@@ -93,7 +96,7 @@ const styles = StyleSheet.create({
       startButton: {
         width: '45%',
         height: 50,
-        backgroundColor: "#A9A9B0", 
+        // backgroundColor: "#A9A9B0", 
         alignItems: "center",
         justifyContent: "center",
         position: 'absolute',

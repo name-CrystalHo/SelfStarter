@@ -142,10 +142,11 @@ export default class SettingsMenu extends Component{
                
             </View>
             <View style ={styles.logoutButton}>
-                <TouchableOpacity onPress={this.signout}>
+                <Button onPress={this.signout} title="Log Out"></Button>
+                {/* <TouchableOpacity onPress={this.signout}>
                 <Text style = {styles.logoutText}>Log Out</Text>
 
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         </View>
         
@@ -178,11 +179,11 @@ const styles = StyleSheet.create({
     logoutButton: {
         width: '45%',
         height: 50,
-        backgroundColor: "#A9A9B0", 
+        // backgroundColor: "#A9A9B0", 
         alignItems: "center",
         justifyContent: "center",
         position: 'absolute',
-        top: '85%'
+        top: '35%'
     },
     logoutText: {
        color: '#8E1600',
@@ -199,7 +200,7 @@ const styles = StyleSheet.create({
         width: '85%',
         height: '75%',
         alignItems: "center",
-        marginTop: '10%'
+        marginTop: '25%'
     },
     dialogTitle: {
         fontWeight: 'bold',
