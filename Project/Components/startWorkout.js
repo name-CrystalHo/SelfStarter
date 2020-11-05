@@ -8,13 +8,53 @@ export default class MainMenuScreen extends Component  {
         super(props);
         
         this.state = {
-            workoutName: JSON.stringify(navigation.getParam('workoutName', 'default value')),
+            workoutName: (props.route.params.workoutName),
+            listOfExercises: [],
         }
+    }
+    componentWillMount () {
+        const user = firebase.auth().currentUser;
+        const uid = user.uid;
+        const database = firebase.database();
+        //const items = database.ref("users/" + uid)
+        // var tempList = []
+        // items.on("value", snapshot =>{
+        //     tempList = snapshot.val()
+        // })
+        database.ref(('users/' + uid + "/" + this.state.workoutName)).on('value', (snapshot) =>{
+            const tempList = []
+            snapshot.forEach((child) => {
+                tempList.push({
+                    key:child.key,
+                    name: child.val().exerciseName,
+                    restTime: child.val().restTime,
+                  })
+                })
+                this.setState({listOfExercises:tempList})
+            })        
+            
     }
     render(){
         return (
             <View style = {styles.container}>
-                <Text style = {styles.titleText}>{this.state.workoutName}</Text>
+                <Text style = {styles.titleText}>{this.state.workoutName + " Workout"}</Text>
+                <View style ={styles.list}>
+                <FlatList
+                    data={this.state.listOfExercises}
+                    keyExtractor={(item)=>item.key}
+                    renderItem={({item})=>{
+                    return(
+                        <View style={styles.item}>
+                        <Text style={styles.title}>{item.name + "\n Rest Time: " + item.restTime}</Text>
+                      </View>)
+                    }}
+                />   
+                </View>
+                 <View style ={styles.startButton}>
+                    <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Main Menu')}>
+                        <Text style = {styles.startText}>Start Workout</Text>
+                    </TouchableOpacity>
+                </View>
             
             </View>
 
@@ -27,7 +67,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         justifyContent: "flex-start",
         alignItems: "center",
-        marginBottom: "15%",
+        marginBottom: "10%",
         marginTop: "10%"
     },
     titleText: {
@@ -35,5 +75,33 @@ const styles = StyleSheet.create({
         fontSize: 40,
         marginTop: '3%'
     },
+    item: {
+        backgroundColor: '#f9c2ff',
+        padding: 20,
+        marginVertical: 8,
+        marginHorizontal: 16,
+      },
+      title: {
+        fontSize: 32,
+        textAlignVertical: "center",
+        textAlign: "center",
+      },
+      startButton: {
+        width: '45%',
+        height: 50,
+        backgroundColor: "#A9A9B0", 
+        alignItems: "center",
+        justifyContent: "center",
+        position: 'absolute',
+        top: '93%'
+    },
+    startText: {
+       color: '#61D4D4',
+       fontWeight: 'bold',
+       fontSize: 18
+    },
+    list: {
+        marginBottom: "37%",
+    }
 }
 );
