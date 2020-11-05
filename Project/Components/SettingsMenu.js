@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image ,Button} from 'react-native';
+import { StyleSheet, Text, View, Image ,Button, Alert} from 'react-native';
+import Dialog, { DialogContent, DialogFooter, DialogButton} from 'react-native-popup-dialog';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as firebase from 'firebase'
 import * as SecureStore from 'expo-secure-store'
@@ -10,9 +11,17 @@ import * as SecureStore from 'expo-secure-store'
 export default class SettingsMenu extends Component{
 
     signout=()=>{
-         SecureStore.setItemAsync('token', null) // to clear the token 
+        firebase.auth().signOut() // to clear the token 
         this.props.navigation.navigate('Home')
        
+     }
+     onChangePasswordPress=()=>{
+         var user=firebase.auth.currentUser;
+         user.updatePassword(this.state.newPassword).then(()=> {
+             Alert.alert("Password was changed");
+         }).catch((error)=>{
+             Alert.alert(error.message);
+         });
      }
    
     render(){
@@ -20,9 +29,9 @@ export default class SettingsMenu extends Component{
         <View style = {styles.container}>
             <Text style = {styles.titleText}>Account Settings</Text>
             <View style = {styles.settingsContainer}>
-                <Text style = {styles.settingsText}>Change Username</Text>
-                <Text style = {styles.settingsText}>Change Password</Text>
-                <Text style = {styles.settingsText}>Change Change Notification Settings</Text>
+                <TouchableOpacity >
+                 <Text style = {styles.settingsText}>Change Password</Text>
+                </TouchableOpacity>
             </View>
             <View style ={styles.logoutButton}>
                 <TouchableOpacity onPress={this.signout}>

@@ -32,7 +32,7 @@ export default class Login extends Component  {
                         return;
                     }
                     const user = firestoreDocument.data()
-                    this.props.navigation.navigate('Main Menu')
+                    this.props.navigation.navigate('Home')
                 })
                 .catch(error => {
                     alert(error)

@@ -23,11 +23,12 @@ firebase.initializeApp(firebaseConfig);
 }
 
 const tokenKeyName='token'
-
+const user = firebase.auth().currentUser;
 export default class Home extends Component{
   
  
   render(){
+    if(user===null){
     return(
      
       <View style={styles.container}>
@@ -43,6 +44,18 @@ export default class Home extends Component{
     );
 
     }
+    else{
+      return(
+      <View style={styles.container}>
+        <Text>Welcome to SelfStarter</Text>
+        <Button title="Go to Main Menu" 
+        onPress={()=>this.props.navigation.navigate('Main Menu')}>
+        </Button>
+      </View>
+      )
+    }
+  }
+ 
 }
 
 const styles = StyleSheet.create({
