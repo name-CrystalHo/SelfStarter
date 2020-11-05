@@ -32,7 +32,7 @@ export default class SettingsMenu extends Component{
     }
    
         onChangePasswordPress=()=>{
-            alert("Feature Not Avaiable Yet")
+            alert("Feature Not Available Yet")
         // if (this.state.newPassword !== this.state.newPassword2) {
         //     alert("Passwords don't match.") 
         // }
