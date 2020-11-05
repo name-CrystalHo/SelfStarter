@@ -309,11 +309,11 @@ const styles = StyleSheet.create({
         marginTop: '5%',
         textAlign: "center",
         fontWeight: 'bold',
-        backgroundColor: '#A9A9B0'
+        backgroundColor: "#ff5c5c"
         
     },
     item: {
-        backgroundColor: '#A9A9B0',
+        backgroundColor: "#ff5c5c",
         padding: 10,
         marginVertical: 8,
         marginHorizontal: 16,
