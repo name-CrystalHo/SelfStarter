@@ -23,12 +23,31 @@ firebase.initializeApp(firebaseConfig);
 }
 
 const tokenKeyName='token'
-const user = firebase.auth().currentUser;
+const userLogged = false;
 export default class Home extends Component{
-  
+  constructor(props){
+    super(props)
+    this.state={
+      userLogged:false,
+    }
+  }
+  componentWillMount(){
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+      this.setState({
+        userLogged:true
+      });
+      }
+      else{
+        this.setState({
+          userLogged:false
+        });
+      }
+   });
+  }
  
   render(){
-    if(user===null){
+    if(this.state.userLogged===false){
     return(
      
       <View style={styles.container}>
@@ -40,9 +59,7 @@ export default class Home extends Component{
         onPress={()=>this.props.navigation.navigate('Signup')}>
         </Button>
       </View>
-
     );
-
     }
     else{
       return(

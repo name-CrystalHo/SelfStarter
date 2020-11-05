@@ -29,9 +29,14 @@ export default class SettingsMenu extends Component{
         <View style = {styles.container}>
             <Text style = {styles.titleText}>Account Settings</Text>
             <View style = {styles.settingsContainer}>
-                <TouchableOpacity >
-                 <Text style = {styles.settingsText}>Change Password</Text>
-                </TouchableOpacity>
+                
+                 <Button title="Change Password" style = {styles.settingsText}
+                            onPress={() => {
+                    this.setState({ visible: true });
+                    }}
+                />
+          
+               
             </View>
             <View style ={styles.logoutButton}>
                 <TouchableOpacity onPress={this.signout}>
