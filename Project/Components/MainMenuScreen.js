@@ -51,7 +51,9 @@ export default class MainMenuScreen extends Component  {
                 renderItem={({item})=>{
                     return(
                         <View style={styles.item}>
-                        <Text style={styles.title}>{item.key}</Text>
+                        <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Start Workout', {workoutName: item.key})}>
+                            <Text style={styles.title}>{item.key}</Text>
+                        </TouchableOpacity>
                       </View>)
                     }}
             />         

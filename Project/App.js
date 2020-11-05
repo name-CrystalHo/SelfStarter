@@ -27,6 +27,7 @@ import Home from "./Components/home";
 import Login from "./Components/login";
 import Signup from "./Components/signup";
 import Settings from "./Components/SettingsMenu"
+import StartWorkout from "./Components/startWorkout"
 
 const Stack=createStackNavigator();
 
@@ -54,6 +55,7 @@ export default class App extends Component {
             <Stack.Screen name="Main Menu" component={MainMenu}></Stack.Screen>
             <Stack.Screen name="Create Workout" component={CreateMenu}></Stack.Screen>
             <Stack.Screen name="Settings" component={Settings}></Stack.Screen>
+            <Stack.Screen name="Start Workout" component={StartWorkout}></Stack.Screen>
           </Stack.Navigator>
         </NavigationContainer>
     );
