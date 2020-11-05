@@ -45,20 +45,24 @@ export default class MainMenuScreen extends Component  {
                 </TouchableOpacity>
             </View>
             <Text style = {styles.titleText}>Your Workouts</Text>
+            
+            <View style = {styles.workoutSelect}>
             <FlatList
                 data={this.state.listOfWorkouts}
                 keyExtractor={(item)=>item.key}
                 renderItem={({item})=>{
                     return(
-                        <View style={styles.item}>
+                        <View style={styles.startWorkout}>
                         <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Start Workout', {workoutName: item.key})}>
-                            <Text style={styles.title}>{item.key}</Text>
+                            <Text style={styles.workoutName}>{item.key}</Text>
                         </TouchableOpacity>
                       </View>)
                     }}
-            />         
+            /> 
+            </View>        
+
             <View style ={styles.newWorkoutButton}>
-             <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Create Workout')}>
+            <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Create Workout')}>
                 <Text style = {styles.newWorkoutText}>Create New Workout</Text>
             </TouchableOpacity>
             </View>
@@ -88,10 +92,10 @@ const styles = StyleSheet.create({
        fontWeight: 'bold',
        fontSize: 18
     },
-    exerciseSelect: {
+    workoutSelect: {
         width: '80%',
         height: '65%',
-        backgroundColor: "#A9A9B0", 
+        backgroundColor: "#fff", 
         alignItems: "center",
         justifyContent: "center",
         marginTop: '15%',
@@ -113,18 +117,18 @@ const styles = StyleSheet.create({
         height: 40,
         width: 40
     },
-    item: {
+    startWorkout: {
         backgroundColor: '#A9A9B0',
         padding: 10,
         marginVertical: 8,
         marginHorizontal: 16,
         alignItems: "center",
-        justifyContent: "center",
-        
-      },
-      title: {
-        fontWeight: 'bold',
+        justifyContent: "center",    
+        width: 300    
+    },
+    workoutName: {
+       fontWeight: 'bold',
        fontSize: 18
-      },
+    },
   });
   

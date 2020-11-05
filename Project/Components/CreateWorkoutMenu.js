@@ -43,7 +43,7 @@ export default class CreateWorkoutMenu extends Component  {
    
     finishButton(){
         if (this.state.workoutText ==="") {
-            alert("Please Provide A Workout Name")
+            alert("Please Provide a Workout Name")
             return
         }
         else{
@@ -80,39 +80,41 @@ render(){
     return (
         <View style = {styles.container}>
             <Text style = {styles.titleText}>Create Workout</Text>
-            <Text>Work Name:</Text>
+            
             <TextInput
               value={this.state.workoutText}
               onChangeText={(workoutText) => this.setState({workoutText})}
-                style = {styles.textIn}
-                placeholder = {this.state.workoutText}
-         
-               
-
+              style = {styles.textIn}
+              placeholder = 'Workout Name'
             />
-            <View style = {styles.switchContainer}>
+
+            {/* <View style = {styles.switchContainer}>
                 <Text>TIME </Text>
                 <Switch
                     value = {this.state.switchValue}
                     onValueChange = {this.toggleSwitch}
                />
                 <Text> REPS</Text>
-            </View>
+            </View> */}
             {/*Use this container for the reminder time entry*/} 
+            
+            {/*
             <View style = {styles.reminderContainer}>
                 <Text>Set Reminder: </Text>
             </View>
+            */}
+            <View style = {styles.exerciseSelect}>
             <FlatList
                 data={this.state.list}
                 keyExtractor={(item)=>item.key}
                 renderItem={({item})=>{
                     return(
                         <View style={styles.item}>
-                        <Text style={styles.title}>{item.key}</Text>
+                        <Text style={styles.exerciseName}>{item.key}</Text>
                       </View>)
                     }}
             />      
- 
+            </View>
             <View style={styles.addExerciseButton}>
                 <Button
                     title="Add Exercise"
@@ -305,13 +307,26 @@ const styles = StyleSheet.create({
         
     },
     item: {
-        backgroundColor: '#f9c2ff',
-        padding: 20,
+        backgroundColor: '#A9A9B0',
+        padding: 10,
         marginVertical: 8,
         marginHorizontal: 16,
+        width: 300,
+        alignItems: "center",
+        justifyContent: "center",  
       },
-      title: {
-        fontSize: 32,
+      exerciseName: {
+        fontWeight: 'bold',
+        fontSize: 18
       },
+      exerciseSelect: {
+        width: '80%',
+        height: '40%',
+        backgroundColor: "#fff", 
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: '15%',
+    },
+
 
 });

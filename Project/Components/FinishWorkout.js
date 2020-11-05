@@ -11,7 +11,7 @@ export default class FinishWorkoutScreen extends Component  {
     render(){
         return (
             <View style = {styles.container}>
-                <Text style = {styles.titleText}>Congrats on completing the workout!</Text>
+                <Text style = {styles.titleText}>Workout Complete!</Text>
                 <View style={styles.addExerciseButton}>
                 <Button
                     title="Main Menu"
@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         justifyContent: "flex-start",
         alignItems: "center",
+        justifyContent: 'center',
         marginBottom: "10%",
         marginTop: "10%"
     },
