@@ -13,7 +13,7 @@ export default class WorkingOutScreen extends Component  {
             index: 1,
             currentExerciseName: '',
             currentSetCount: '',
-            currentRepCount: 'd',
+            currentRepCount: '',
             currentResttime: 0,
         }
     }
@@ -52,10 +52,10 @@ export default class WorkingOutScreen extends Component  {
     render(){
         return (
             <View style = {styles.container}>
-                <Text style = {styles.titleText}>{"Exercise: " + this.currentExerciseName}</Text>
-                <Text style = {styles.titleText}>{"Sets: " + this.currentSetCount}</Text>
-                <Text style = {styles.titleText}>{"Reps: " + this.currentRepCount}</Text>
-                <Text style = {styles.titleText}>{"Rest Time: " + this.currentResttime}</Text>
+                <Text style = {styles.titleText}>{"Exercise: " + this.state.currentExerciseName}</Text>
+                <Text style = {styles.titleText}>{"Sets: " + this.state.currentSetCount}</Text>
+                <Text style = {styles.titleText}>{"Reps: " + this.state.currentRepCount}</Text>
+                <Text style = {styles.titleText}>{"Rest Time: " + this.state.currentResttime}</Text>
 
             </View>
         );
