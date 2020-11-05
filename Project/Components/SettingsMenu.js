@@ -30,21 +30,22 @@ export default class SettingsMenu extends Component{
         var cred=firebase.auth.EmailAuthProvider.credential(user.email,currentPassword);
         return user.reauthenticateWithCredential(cred);
     }
-     onChangePasswordPress=()=>{
-        console.log(this.state.newPassword)
-        if (this.state.newPassword !== this.state.newPassword2) {
-            alert("Passwords don't match.") 
-        }
-        this.reauthenticate(this.state.currentPassword).then(()=>{
-            var user=firebase.auth.currentUser;
-            user.updatePassword(this.state.newPassword).then(()=> {
-                Alert.alert("Password was changed");
-            }).catch((error)=>{
-                Alert.alert(error.message);
-            });
-        }).catch((error)=>{
-            Alert.alert(error.message);
-        });
+   
+        onChangePasswordPress=()=>{
+            alert("Feature Not Avaiable Yet")
+        // if (this.state.newPassword !== this.state.newPassword2) {
+        //     alert("Passwords don't match.") 
+        // }
+        // this.reauthenticate(this.state.currentPassword).then(()=>{
+        //     var user=firebase.auth.currentUser;
+        //     user.updatePassword(this.state.newPassword).then(()=> {
+        //         Alert.alert("Password was changed");
+        //     }).catch((error)=>{
+        //         Alert.alert(error.message);
+        //     });
+        // }).catch((error)=>{
+        //     Alert.alert(error.message);
+        // });
         
      }
  

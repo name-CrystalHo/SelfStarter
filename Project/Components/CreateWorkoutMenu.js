@@ -128,7 +128,7 @@ render(){
                 />
                 <Dialog
                     width = {.7}
-                    height = {.47}
+                    height = {.70}
                     visible={this.state.visible}
                     onTouchOutside={() => {
                     this.setState({ visible: false });

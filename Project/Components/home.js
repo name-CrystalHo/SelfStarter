@@ -67,7 +67,8 @@ export default class Home extends Component{
     else{
       return(
       <View style={styles.container}>
-        <Text>Welcome to SelfStarter</Text>
+         <Image style = {styles.logo} source={require('../assets/Logo.png')} />
+        <Text>Welcome to Self Start</Text>
         <Button title="Go to Main Menu" 
         onPress={()=>this.props.navigation.navigate('Main Menu')}>
         </Button>
