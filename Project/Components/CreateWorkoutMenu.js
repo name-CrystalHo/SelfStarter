@@ -51,7 +51,13 @@ export default class CreateWorkoutMenu extends Component  {
         }
     }
     addNewExercise (){ 
-       
+        if (this.state.exerciseNameText==="" || this.state.numOfRepsText===""||this.state.restTimeText==="" ||this.state.numOfSetsText==="") {
+            alert("Please fill out all the fields")
+            return
+        }
+        else{
+        this.setState({visible:false})
+        }
         const user = firebase.auth().currentUser;
         const uid = user.uid;
     
@@ -66,7 +72,7 @@ export default class CreateWorkoutMenu extends Component  {
             key: this.state.exerciseNameText,
             name: this.state.exerciseNameText,
         })
-        this.setState({visible:false})
+      
        
       }
       
