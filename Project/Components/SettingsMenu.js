@@ -27,26 +27,26 @@ export default class SettingsMenu extends Component{
      }
      reauthenticate=(currentPassword)=>{
         var user=firebase.auth().currentUser;
-        var cred=firebase.auth.credential(user.uid,currentPassword);
+        var cred=firebase.auth.EmailAuthProvider.credential(user.email,currentPassword);
         return user.reauthenticateWithCredential(cred);
     }
-     onChangePasswordPress(){
-        if (this.state.password !== this.state.password2) {
-            alert("Passwords don't match.") 
-        }
-        this.reauthenticate(this.state.currentPassword).then(()=>{
-            var user=firebase.auth.currentUser;
-            user.updatePassword(this.state.newPassword).then(()=> {
-                Alert.alert("Password was changed");
-                this.setState({visible:false})
-            }).catch((error)=>{
-                Alert.alert(error.message);
-            });
-        }).catch((error)=>{
-            Alert.alert(error.message);
-        });
+    //  onChangePasswordPress=()=>{
+    //     console.log(this.state.newPassword)
+    //     if (this.state.newPassword !== this.state.newPassword2) {
+    //         alert("Passwords don't match.") 
+    //     }
+    //     this.reauthenticate(this.state.currentPassword).then(()=>{
+    //         var user=firebase.auth.currentUser;
+    //         user.updatePassword(this.state.newPassword).then(()=> {
+    //             Alert.alert("Password was changed");
+    //         }).catch((error)=>{
+    //             Alert.alert(error.message);
+    //         });
+    //     }).catch((error)=>{
+    //         Alert.alert(error.message);
+    //     });
         
-     }
+    //  }
  
  
     render(){
@@ -84,8 +84,7 @@ export default class SettingsMenu extends Component{
                           <DialogButton
                             text="Update"
                             bordered
-                            onPress=
-                                {this.pnChangePasswordPress}  
+                            onPress={this.onChangePasswordPress}                    
                             key="button-2"
                             alignItems = 'bottom'
                             justifyContent = 'bottom'
@@ -108,7 +107,7 @@ export default class SettingsMenu extends Component{
                             placeholder = 'Retype New Password'
                             autoCapitalize="none"
                             secureTextEntry={true}
-                            onChangeText={(text)=>{this.setState({newCurrent:text})}}
+                            onChangeText={(text)=>{this.setState({currentPassword:text})}}
                         />
                         
                         <Text style = {styles.dialogTitle}>
