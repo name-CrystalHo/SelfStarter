@@ -30,7 +30,7 @@ export default class WorkingOutScreen extends Component  {
             const tempList = []
             snapshot.forEach((child) => {
                 tempList.push({
-                    key:child.key,
+                    key: child.key,
                     name: child.val().exerciseName,
                     reps: child.val().numOfReps,
                     sets: child.val().numOfSets,
@@ -39,14 +39,14 @@ export default class WorkingOutScreen extends Component  {
                 })
                 this.setState({listOfExercises:tempList})
             })
-            this.state.listOfExercises.map((exercise, index) =>{
-                if(index == this.state.index){
-                    this.setState({currentExerciseName: exercise.name});
-                    this.setState({currentSetCount: exercise.sets});
-                    this.setState({currentRepCount: exercise.reps});
-                    this.setState({currentResttime: exercise.restTime});
-                }
-            });       
+        this.state.listOfExercises.map((exercise, index) =>{
+            if(index === this.state.index){
+                this.setState({currentExerciseName: exercise.name});
+                this.setState({currentSetCount: exercise.sets});
+                this.setState({currentRepCount: exercise.reps});
+                this.setState({currentResttime: exercise.restTime});
+            }
+        });       
             
     }
     render(){
@@ -56,6 +56,7 @@ export default class WorkingOutScreen extends Component  {
                 <Text style = {styles.titleText}>{"Sets: " + this.state.currentSetCount}</Text>
                 <Text style = {styles.titleText}>{"Reps: " + this.state.currentRepCount}</Text>
                 <Text style = {styles.titleText}>{"Rest Time: " + this.state.currentResttime}</Text>
+                <Text style = {styles.titleText}>{"Workout: " + this.state.workoutName}</Text>
 
             </View>
         );
