@@ -98,7 +98,7 @@ export default class Signup extends Component  {
  
         <Button 
           onPress={this.onRegisterPress.bind(this)}
-          title="SignUp">
+          title="Sign Up">
           Press Me
           </Button>
       </View>

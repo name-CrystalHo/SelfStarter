@@ -45,7 +45,7 @@ export default class StartWorkoutScreen extends Component  {
                     renderItem={({item})=>{
                     return(
                         <View style={styles.item}>
-                        <Text style={styles.title}>{item.name + "\n Rest Time: " + item.restTime}</Text>
+                        <Text style={styles.title}>{item.name + "\n Rest Time: " + item.restTime + " seconds"}</Text>
                       </View>)
                     }}
                 />   
@@ -76,13 +76,17 @@ const styles = StyleSheet.create({
         marginTop: '3%'
     },
     item: {
-        backgroundColor: '#f9c2ff',
-        padding: 20,
+        backgroundColor: '#A9A9B0',
+        padding: 10,
         marginVertical: 8,
         marginHorizontal: 16,
+        width: 300,
+        alignItems: "center",
+        justifyContent: "center",  
       },
       title: {
-        fontSize: 32,
+        fontWeight: 'bold',
+        fontSize: 18,
         textAlignVertical: "center",
         textAlign: "center",
       },
@@ -93,7 +97,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         position: 'absolute',
-        top: '93%'
+        top: '85%'
     },
     startText: {
        color: '#61D4D4',
@@ -101,7 +105,13 @@ const styles = StyleSheet.create({
        fontSize: 18
     },
     list: {
-        marginBottom: "37%",
-    }
+        width: '80%',
+        height: '60%',
+        backgroundColor: "#fff", 
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: '15%',
+    },
+
 }
 );

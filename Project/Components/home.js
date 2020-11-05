@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {StyleSheet, View, Text, Button,Alert } from "react-native";
+import {StyleSheet, View, Text, Button,Alert, Image } from "react-native";
 import * as Facebook from 'expo-facebook';
 import * as SecureStore from 'expo-secure-store'
 import * as firebase from 'firebase'
@@ -49,13 +49,16 @@ export default class Home extends Component{
   render(){
     if(this.state.userLogged===false){
     return(
-     
+      
+      
+      
       <View style={styles.container}>
+        <Image style = {styles.logo} source={require('../assets/Logo.png')} />
         <Button title="Login" 
         onPress={()=>this.props.navigation.navigate('Login')}>
         </Button>
 
-        <Button title="Signup" 
+        <Button title="Sign Up" 
         onPress={()=>this.props.navigation.navigate('Signup')}>
         </Button>
       </View>
@@ -81,5 +84,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center"
+  },
+  logo: {
+    height: 100,
+    width: 200,
+    position: 'absolute',
+    top: '10%'
   }
 });

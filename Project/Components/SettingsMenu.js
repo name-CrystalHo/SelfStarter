@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         position: 'absolute',
-        top: '93%'
+        top: '85%'
     },
     logoutText: {
        color: '#8E1600',

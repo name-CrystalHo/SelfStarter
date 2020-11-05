@@ -109,11 +109,12 @@ export default class WorkingOutScreen extends Component  {
         //const {count} = this.state
         return (
             <View style = {styles.container}>
-                <Text style = {styles.titleText}>{"Exercise: " + this.state.currentExerciseName}</Text>
-                <Text style = {styles.titleText}>{"Sets: " + this.state.currentSetCount}</Text>
-                <Text style = {styles.titleText}>{"Reps: " + this.state.currentRepCount}</Text>
-                <Text style = {styles.titleText}>{"Rest Time: " + this.state.currentResttime}</Text>
-    
+                <Text style = {styles.titleText}>{this.state.currentExerciseName}</Text>
+                <View style = {styles.details}>
+                    <Text style = {styles.title}>{"Sets: " + this.state.currentSetCount}</Text>
+                    <Text style = {styles.title}>{"Reps: " + this.state.currentRepCount}</Text>
+                    <Text style = {styles.title}>{"Rest Time: " + this.state.currentResttime + " seconds"}</Text>
+                </View>
 
                 <View style ={styles.startButton}>
                     <TouchableOpacity  onPress={()=>this.fetch()}>
@@ -138,16 +139,17 @@ const styles = StyleSheet.create({
     },
     titleText: {
         fontWeight: 'bold',
-        fontSize: 40,
-        marginTop: '3%',
+        fontSize: 30,
+        marginTop: '6%',
         textAlignVertical: "center",
         textAlign: "center",
     },
     title: {
-        fontSize: 32,
+        fontWeight: 'bold',
+        fontSize: 25,
         textAlignVertical: "center",
         textAlign: "center",
-      },
+    },
     startButton: {
         width: '45%',
         height: 50,
@@ -155,6 +157,19 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         position: 'absolute',
-        top: '93%'
+        top: '85%'
     },
+    startText: {
+       color: '#61D4D4',
+       fontWeight: 'bold',
+       fontSize: 18
+    },
+    details: {
+        width: '80%',
+        height: '40%',
+        backgroundColor: "#fff", 
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: '15%',    
+    }
 });

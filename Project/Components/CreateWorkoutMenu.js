@@ -52,7 +52,7 @@ export default class CreateWorkoutMenu extends Component  {
     }
     addNewExercise (){ 
         if (this.state.workoutText ==="") {
-            alert("Please Provide A Workout Name")
+            alert("Please Provide a Workout Name")
             return
         }
         if (this.state.exerciseNameText==="" || this.state.numOfRepsText===""||this.state.restTimeText==="" ||this.state.numOfSetsText==="") {

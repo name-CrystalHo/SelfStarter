@@ -12,13 +12,20 @@ export default class FinishWorkoutScreen extends Component  {
         return (
             <View style = {styles.container}>
                 <Text style = {styles.titleText}>Workout Complete!</Text>
-                <View style={styles.addExerciseButton}>
+                {/* <View style={styles.addExerciseButton}>
                 <Button
                     title="Main Menu"
                     onPress={() => {this.props.navigation.navigate('Main Menu')
                     }}
                 />
-                </View>
+                </View> */}
+            <View style ={styles.finishButton}>
+            <TouchableOpacity  onPress={() => {this.props.navigation.navigate('Main Menu')
+                    }}>
+                <Text style = {styles.finishText}>Main Menu</Text>
+            </TouchableOpacity>
+            </View>
+
             </View>
         )
     }
@@ -39,7 +46,7 @@ const styles = StyleSheet.create({
         fontSize: 40,
         marginTop: '3%'
     },
-    addExerciseButton: {
+    finishButton: {
         width: '55%',
         height: 50,
         backgroundColor: "#A9A9B0", 
@@ -48,4 +55,9 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: '80%'
     },
+    finishText: {
+       color: '#61D4D4',
+       fontWeight: 'bold',
+       fontSize: 18
+    }
 })

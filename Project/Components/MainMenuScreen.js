@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginTop: '15%',
     },
-
     titleText: {
         fontWeight: 'bold',
         fontSize: 40,
