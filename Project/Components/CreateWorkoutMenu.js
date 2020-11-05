@@ -41,7 +41,17 @@ export default class CreateWorkoutMenu extends Component  {
         this.setState({switchValue: value})
     }
    
+    finishButton(){
+        if (this.state.workoutText ==="") {
+            alert("Please Provide A Workout Name")
+            return
+        }
+        else{
+            this.props.navigation.navigate('Main Menu')
+        }
+    }
     addNewExercise (){ 
+       
         const user = firebase.auth().currentUser;
         const uid = user.uid;
     
@@ -64,11 +74,12 @@ render(){
     return (
         <View style = {styles.container}>
             <Text style = {styles.titleText}>Create Workout</Text>
+            <Text>Work Name:</Text>
             <TextInput
               value={this.state.workoutText}
               onChangeText={(workoutText) => this.setState({workoutText})}
                 style = {styles.textIn}
-                placeholder = 'Workout Name'
+                placeholder = {this.state.workoutText}
          
                
 
@@ -189,7 +200,7 @@ render(){
                 </Dialog>
             </View>
             <View style ={styles.finishButton}>
-            <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Main Menu')}>
+            <TouchableOpacity  onPress={()=>this.finishButton()}>
                 <Text style = {styles.finishText}>Finish</Text>
             </TouchableOpacity>
             </View>
