@@ -114,13 +114,17 @@ const styles = StyleSheet.create({
         width: 40
     },
     item: {
-        backgroundColor: '#f9c2ff',
-        padding: 20,
+        backgroundColor: '#A9A9B0',
+        padding: 10,
         marginVertical: 8,
         marginHorizontal: 16,
+        alignItems: "center",
+        justifyContent: "center",
+        
       },
       title: {
-        fontSize: 32,
+        fontWeight: 'bold',
+       fontSize: 18
       },
   });
   
