@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image,Button, FlatList} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { firebase } from './config'
 
-export default class MainMenuScreen extends Component  {
+export default class StartWorkoutScreen extends Component  {
     constructor(props) {
         super(props);
         
@@ -51,7 +51,7 @@ export default class MainMenuScreen extends Component  {
                 />   
                 </View>
                  <View style ={styles.startButton}>
-                    <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Main Menu')}>
+                    <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Working Out', {listOfExercises: this.state.workoutName})}>
                         <Text style = {styles.startText}>Start Workout</Text>
                     </TouchableOpacity>
                 </View>
