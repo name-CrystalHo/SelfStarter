@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image ,Button} from 'react-native';
+import { StyleSheet, Text, TextInput,View, Image ,Button, Alert} from 'react-native';
+import Dialog, { DialogContent, DialogFooter, DialogButton} from 'react-native-popup-dialog';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import * as firebase from 'firebase'
 import * as SecureStore from 'expo-secure-store'
@@ -8,21 +9,136 @@ import * as SecureStore from 'expo-secure-store'
 
   
 export default class SettingsMenu extends Component{
-
+    constructor(props){
+        super(props);
+        this.state={
+            visible:false,
+            newPassword:"",
+            newPassword2:"",
+            currentPassowrd:"",
+        }
+    
+    }
+    
     signout=()=>{
-         SecureStore.setItemAsync('token', null) // to clear the token 
+        firebase.auth().signOut() // to clear the token 
         this.props.navigation.navigate('Home')
        
      }
-   
+     reauthenticate=(currentPassword)=>{
+        var user=firebase.auth().currentUser;
+        var cred=firebase.auth.EmailAuthProvider.credential(user.email,currentPassword);
+        return user.reauthenticateWithCredential(cred);
+    }
+     onChangePasswordPress=()=>{
+        console.log(this.state.newPassword)
+        if (this.state.newPassword !== this.state.newPassword2) {
+            alert("Passwords don't match.") 
+        }
+        this.reauthenticate(this.state.currentPassword).then(()=>{
+            var user=firebase.auth.currentUser;
+            user.updatePassword(this.state.newPassword).then(()=> {
+                Alert.alert("Password was changed");
+            }).catch((error)=>{
+                Alert.alert(error.message);
+            });
+        }).catch((error)=>{
+            Alert.alert(error.message);
+        });
+        
+     }
+ 
+ 
     render(){
     return (
         <View style = {styles.container}>
             <Text style = {styles.titleText}>Account Settings</Text>
             <View style = {styles.settingsContainer}>
-                <Text style = {styles.settingsText}>Change Username</Text>
-                <Text style = {styles.settingsText}>Change Password</Text>
-                <Text style = {styles.settingsText}>Change Change Notification Settings</Text>
+                
+                 <Button title="Change Password" style = {styles.settingsText}
+                            onPress={() => {
+                    this.setState({ visible: true });
+                    }}
+                />
+                <Dialog
+                    width = {.7}
+                    height = {.47}
+                    visible={this.state.visible}
+                    onTouchOutside={() => {
+                    this.setState({ visible: false });
+                    }}
+                    footer={
+                        <DialogFooter>
+                            
+                          <DialogButton
+                            text="Cancel"
+                            bordered
+                            onPress={() => {
+                                this.setState({ visible: false });
+                              }}
+                            key="button-1"
+                            alignItems = 'bottom'
+                            justifyContent = 'bottom'
+                            bottom = {0}
+                          />
+                          <DialogButton
+                            text="Update"
+                            bordered
+                            onPress={this.onChangePasswordPress}                    
+                            key="button-2"
+                            alignItems = 'bottom'
+                            justifyContent = 'bottom'
+                          />
+                        </DialogFooter>
+                      }>
+                    <DialogContent
+                        style={{
+                            backgroundColor: '#F7F7F8',
+                            width: '100%',
+                            height: '85%',
+                            alignItems: "center",
+                        }}>
+                      <Text style = {styles.dialogTitle}>
+                           Current Password:
+                        </Text>
+                        <TextInput
+                            value={this.state.currentPassword}
+                            style = {styles.dialogTextIn}
+                            placeholder = 'Retype New Password'
+                            autoCapitalize="none"
+                            secureTextEntry={true}
+                            onChangeText={(text)=>{this.setState({currentPassword:text})}}
+                        />
+                        
+                        <Text style = {styles.dialogTitle}>
+                            New Password:
+
+                        </Text>
+                        <TextInput
+                            value={this.state.newPassword}
+                            style = {styles.dialogTextIn}
+                            placeholder = 'New Password'
+                            autoCapitalize="none"
+                            secureTextEntry={true}
+                            onChangeText={(text)=>{this.setState({newPassword:text})}}
+                        />
+                        <Text style = {styles.dialogTitle}>
+                            Retype New Password:
+
+                        </Text>
+                        <TextInput
+                            value={this.state.newPassword2}
+                            style = {styles.dialogTextIn}
+                            placeholder = 'Retype New Password'
+                            autoCapitalize="none"
+                            secureTextEntry={true}
+                            onChangeText={(text)=>{this.setState({newPassword2:text})}}
+                        />
+                        
+
+                    </DialogContent>
+                </Dialog>
+               
             </View>
             <View style ={styles.logoutButton}>
                 <TouchableOpacity onPress={this.signout}>
@@ -83,5 +199,22 @@ const styles = StyleSheet.create({
         height: '75%',
         alignItems: "center",
         marginTop: '10%'
-    }
+    },
+    dialogTitle: {
+        fontWeight: 'bold',
+        fontSize: 20,
+        marginTop: '3%',
+        textAlign: "center",
+        justifyContent: "center",
+        //position: 'absolute',
+    },
+    dialogTextIn: {
+        height: 40,
+        width: '80%',
+        marginTop: '5%',
+        textAlign: "center",
+        fontWeight: 'bold',
+        backgroundColor: '#A9A9B0'
+        
+    },
 });
