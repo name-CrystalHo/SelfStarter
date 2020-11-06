@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Project",
+    "name": "Self Start",
     "slug": "Project",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,6 +18,11 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.CS4720.SelfStart",
+      "versionCode": 1,
+      "permissions": []
     },
     "web": {
       "favicon": "./assets/favicon.png"
