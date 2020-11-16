@@ -14,11 +14,17 @@ export default class MainMenuScreen extends Component  {
         
         this.state = {
             listOfWorkouts: [] ,
+            nav:false,
 
         }
       }
+    gotoWorkout=(key)=>{
+        this.props.navigation.navigate('Start Workout', {workoutName: key})
+    
+  };
 
     deleteItem = (key,index) => {
+
     const user = firebase.auth().currentUser;
     const uid = user.uid;
     const database = firebase.database();
@@ -28,10 +34,7 @@ export default class MainMenuScreen extends Component  {
     arr.splice(index, 1);
     this.setState({listOfWorkouts:arr});
   };
-  gotoWorkout=(key)=>{
-      console.log("djfkhd")
-    this.props.navigation.navigate('Start Workout', {workoutName: key})
-  }
+ 
     componentWillMount () {
         const user = firebase.auth().currentUser;
         const uid = user.uid;
@@ -66,7 +69,7 @@ export default class MainMenuScreen extends Component  {
                 keyExtractor={(item)=>item.key}
                 renderItem={({item,index})=>{             
                     return (        
-                     <ItemBox data={item} handleDelete={() => this.deleteItem(item.key,index)} /> 
+                     <ItemBox data={item} handleDelete={() => this.deleteItem(item.key,index)} handleNavigate={() =>this.gotoWorkout(item.key)}  /> 
                     );
                 }}
                 

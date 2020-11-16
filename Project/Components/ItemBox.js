@@ -33,12 +33,10 @@ const ItemBox = (props) => {
 
     <Swipeable renderLeftActions={leftSwipe}>    
         <TouchableOpacity  style={styles.myButton}
-    onPress={()=>this.props.navigation.navigate('Start Workout', {workoutName: item.key})}
+    // onPress={()=>this.props.navigation.navigate('Start Workout', {workoutName: item.key})}
+    onPress={props.handleNavigate}
    >
-       <Button 
-       color="black"
-        title={props.data.key}      
-       ></Button> 
+       <Text>{props.data.key}</Text> 
     </TouchableOpacity>
      </Swipeable>
 
