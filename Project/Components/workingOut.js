@@ -160,12 +160,11 @@ export default class WorkingOutScreen extends Component  {
                         <Text style = {styles.rest}>{"Rest : " + this.state.countDownVar }</Text>
                     }
                 <View style ={styles.startButton}>
-                    <Button
-                    title="Start Rest"
-                    onPress={()=>this.fetch()}></Button>
-                    {/* <TouchableOpacity  onPress={()=>this.fetch()}>
-                        <Text style = {styles.startText}>Next Excercise</Text>
-                    </TouchableOpacity> */}
+                    { this.state.countPressed<=1 && 
+                        <Button
+                        title="Start Rest"
+                        onPress={()=>this.fetch()}></Button>
+                    }
                 </View>
             </View>
         );
