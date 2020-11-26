@@ -16,9 +16,14 @@ export default class WorkingOutScreen extends Component  {
             currentRepCount: '',
             currentResttime: 0,
             isRestPressed: false,
+            countPressed: 0,
+            countDownVar: 0,
+
         }
     }
+    //button to start rest - timer will start clicking then when timer runs out it goes to the next page
     fetch () {
+        
         const user = firebase.auth().currentUser;
         const uid = user.uid;
         const database = firebase.database();
@@ -45,11 +50,41 @@ export default class WorkingOutScreen extends Component  {
             this.props.navigation.navigate('Finish Workout')
             return
         }
+
+        if(this.state.countPressed > 0){
+            //this.setState({countPressed: this.state.countPressed- 2})
+            this.setState({countDownVar: this.state.currentResttime})
+            //this.setState({countDownVar: 3})
+            //this.countDown();
+            var myInterval = setInterval(() => {
+                this.setState(prevState => ({
+                    countDownVar: prevState.countDownVar -1
+                }))
+                if (this.state.countDownVar < 1) {
+                    this.setState({index: this.state.index +1})
+                    this.setState({countPressed: 0})
+                    this.fetch()
+                    clearInterval(myInterval);
+                    
+
+                  }
+            }, 1000)
+            
+            // this.setState({index: this.state.index +1})
+            // this.setState({currentExerciseName: tempList[this.state.index].name})
+            // this.setState({currentSetCount: tempList[this.state.index].sets})
+            // this.setState({currentRepCount: tempList[this.state.index].reps})
+            // this.setState({currentResttime: tempList[this.state.index].restTime})
+            // this.setState({countPressed: this.state.countPressed +1})
+
+        }
+        
+        
         this.setState({currentExerciseName: tempList[this.state.index].name})
         this.setState({currentSetCount: tempList[this.state.index].sets})
         this.setState({currentRepCount: tempList[this.state.index].reps})
         this.setState({currentResttime: tempList[this.state.index].restTime})
-        this.setState({index: this.state.index+1})
+        this.setState({countPressed: this.state.countPressed +1})
 
     }
     componentWillMount () {
@@ -90,13 +125,19 @@ export default class WorkingOutScreen extends Component  {
 
             
     }
-    // countDown (){
-    //     while(this.state.currentResttime>0){
-    //         //this.state.currentResttime = this.state.currentResttime -1;
-    //         setTimeout(() => {  this.setState({currentResttime: this.state.currentResttime-1}) }, 1000);
-    //     }
-    //     this.setState({index: this.state.index+1});
+    countDown (){
+        while(this.state.countDownVar>0){
+            //this.state.currentResttime = this.state.currentResttime -1;
+            setTimeout(() => {  this.setState({countDownVar: this.state.countDownVar-1}) }, 1000);
+        }
 
+    }
+    // startTimer(){
+    //     this.myInterval = setInterval(() => {
+    //         this.setState(prevState => ({
+    //             currentResttime: prevState.currentRestTime -1
+    //         }))
+    //     }, 1000)
     // }
     doIntervalChange = () => {
         this.myInterval = setInterval(() => {
@@ -115,10 +156,12 @@ export default class WorkingOutScreen extends Component  {
                     <Text style = {styles.title}>{"Reps: " + this.state.currentRepCount}</Text>
                     <Text style = {styles.title}>{"Rest Time: " + this.state.currentResttime + " seconds"}</Text>
                 </View>
-
+                {this.state.countPressed>1 && 
+                        <Text style = {styles.rest}>{"Rest : " + this.state.countDownVar }</Text>
+                    }
                 <View style ={styles.startButton}>
                     <Button
-                    title="Next Excercise"
+                    title="Start Rest"
                     onPress={()=>this.fetch()}></Button>
                     {/* <TouchableOpacity  onPress={()=>this.fetch()}>
                         <Text style = {styles.startText}>Next Excercise</Text>
@@ -153,6 +196,14 @@ const styles = StyleSheet.create({
         textAlignVertical: "center",
         textAlign: "center",
     },
+    rest: {
+        fontWeight: 'bold',
+        fontSize: 25,
+        textAlignVertical: "center",
+        textAlign: "center",
+        position: 'absolute',
+        top: '88%'
+    },
     startButton: {
         width: '45%',
         height: 50,
@@ -160,7 +211,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         position: 'absolute',
-        top: '85%'
+        top: '80%'
     },
     startText: {
        color: '#61D4D4',
