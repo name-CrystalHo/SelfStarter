@@ -5,6 +5,7 @@ import { Button } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { firebase } from './config'
 import {Container,List,ListItem, Icon} from 'native-base'
+import ExerciseBox from './ExerciseBox'
 
 
 export default class CreateWorkoutMenu extends Component  {
@@ -17,26 +18,36 @@ export default class CreateWorkoutMenu extends Component  {
             numOfSetsText: '',
             numOfRepsText: '',
             restTimeText: '',
-            list:[]
+            list:[],
+            visibleEdit:false,
+            keyHold:"",
         }
     
     }
-    // componentDidMount(){
-    //     const currentUser = firebase.auth().currentUser.uid;
-    //     firebase.database().ref((`users/${currentUser}`+'/'+this.state.workoutText)).on('value', (snapshot) =>{
-    //       var li = []
-    //       snapshot.forEach((child)=>{
-    //        li.push({
-    //         key:child.key,
-    //         name: child.val().exerciseName,
+    updateWorkout(){
+      
+        const user = firebase.auth().currentUser;
+        const uid = user.uid;
+        console.log(this.state.keyHold)
+        firebase.database().ref('users/' + uid + "/" + this.state.workoutText+"/"+this.state.keyHold).set({
+            exerciseName: this.state.exerciseNameText,
+            nameOfReps:this.state.numOfRepsText,
+            numOfSets:this.state.numOfSetsText,
+            restTime:this.state.restTimeText,
+          });
+        this.setState({visible:false})
+      };
+    deleteItem = (key,index) => {
 
-    //       })
-    //     })
-    //    this.setState({list:li})
-    //   })
-    //   console.log(this.state.list)
-    //  }
-  
+        const user = firebase.auth().currentUser;
+        const uid = user.uid;
+        const database = firebase.database();
+        database.ref('users/' + uid + "/" + this.state.workoutText+"/"+key).remove()
+        
+        const arr = [...this.state.list];
+        arr.splice(index, 1);
+        this.setState({list:arr});
+      };
     toggleSwitch = (value) => {
         this.setState({switchValue: value})
     }
@@ -59,8 +70,20 @@ export default class CreateWorkoutMenu extends Component  {
             alert("Please fill out all the workout fields")
             return
         }
+        if (isNaN(parseInt(this.state.numOfRepsText))==true || parseInt(this.state.numOfRepsText)<0){
+            alert("Please make sure that reps is a postive number")
+            return
+        }
+        if (isNaN(parseInt(this.state.restTimeText))==true|| parseInt(this.state.restTimeText)<0){
+            alert("Please make sure that rest time is a number")
+            return
+        }
+        if (isNaN(parseInt(this.state.numOfSetsText))==true || parseInt(this.state.numOfSetsText)<0){
+            alert("Please make sure that sets is a number")
+            return
+        }
         else{
-        this.setState({visible:false})
+        this.setState({visibleAdd:false})
         }
         const user = firebase.auth().currentUser;
         const uid = user.uid;
@@ -73,13 +96,36 @@ export default class CreateWorkoutMenu extends Component  {
           restTime: this.state.restTimeText,
         });
         this.state.list.push({
-            key: this.state.exerciseNameText,
+            key: firebase.database().ref().child("value").push().key,
             name: this.state.exerciseNameText,
+            rest: this.state.restTimeText,
+            rep:this.state.numOfRepsText,
+            set:this.state.numOfSetsText,
         })
-      
-       
+
       }
       
+      componentWillMount () {
+        const user = firebase.auth().currentUser;
+        const uid = user.uid;
+        const database = firebase.database();
+        if (this.state.workoutText!=""){
+         database.ref(('users/' + uid + "/" + this.state.workoutText)).on('value', (snapshot) =>{
+            const tempList = []
+            snapshot.forEach((child) => {
+                tempList.push({
+                    key:child.key,
+                    name: child.val().exerciseName,
+                    rest: child.val().restTime,
+                    rep:child.val().numOfReps,
+                    set:child.val().numOfSets,
+                  })
+                })
+                this.setState({list:tempList})
+            })        
+        }
+        
+    }
 render(){
     return (
         <View style = {styles.container}>
@@ -91,56 +137,47 @@ render(){
               style = {styles.textIn}
               placeholder = 'Workout Name'
             />
-
-            {/* <View style = {styles.switchContainer}>
-                <Text>TIME </Text>
-                <Switch
-                    value = {this.state.switchValue}
-                    onValueChange = {this.toggleSwitch}
-               />
-                <Text> REPS</Text>
-            </View> */}
-            {/*Use this container for the reminder time entry*/} 
-            
-            {/*
-            <View style = {styles.reminderContainer}>
-                <Text>Set Reminder: </Text>
-            </View>
-            */}
             <View style = {styles.exerciseSelect}>
             <FlatList
                 data={this.state.list}
                 keyExtractor={(item)=>item.key}
-                renderItem={({item})=>{
-                    return(
-                        <View style={styles.item}>
-                        <Text style={styles.exerciseName}>{item.key}</Text>
-                      </View>)
-                    }}
+                renderItem={({item,index})=>{
+                    return (        
+                        <ExerciseBox data={item} handleDelete={() => this.deleteItem(item.key,index)}
+                        handleEdit={()=>this.setState(
+                       {visible:true, 
+                        keyHold:item.key,
+                        exerciseNameText: item.name,
+                        numOfSetsText: item.set,
+                        numOfRepsText: item.rep,
+                        restTimeText: item.rest,
+                        
+                       })}  /> 
+                       );
+                }}
             />      
             </View>
             <View style={styles.addExerciseButton}>
                 <Button
                     title="Add Exercise"
                     onPress={() => {
-                    this.setState({ visible: true });
+                    this.setState({ visibleAdd: true });
                     }}
                 />
                 <Dialog
                     width = {.7}
                     height = {.70}
-                    visible={this.state.visible}
+                    visible={this.state.visibleAdd}
                     onTouchOutside={() => {
-                    this.setState({ visible: false });
+                    this.setState({ visibleAdd: false });
                     }}
                     footer={
-                        <DialogFooter>
-                            
+                        <DialogFooter>    
                           <DialogButton
                             text="Cancel"
                             bordered
                             onPress={() => {
-                                this.setState({ visible: false });
+                                this.setState({ visibleAdd: false });
                               }}
                             key="button-1"
                             alignItems = 'bottom'
@@ -184,6 +221,8 @@ render(){
                             onChangeText={(numOfSetsText) => this.setState({numOfSetsText})}
                             style = {styles.dialogTextIn}
                             placeholder = 'Sets'
+                            keyboardType = 'numeric'
+                            returnKeyType="done"
                         />
 
                          <Text style = {styles.dialogTitle}>
@@ -195,6 +234,8 @@ render(){
                             onChangeText={(numOfRepsText) => this.setState({numOfRepsText})}
                             style = {styles.dialogTextIn}
                             placeholder = 'Reps'
+                            keyboardType = 'numeric'
+                            returnKeyType="done"
                         />
 
                          <Text style = {styles.dialogTitle}>
@@ -206,10 +247,99 @@ render(){
                             onChangeText={(restTimeText) => this.setState({restTimeText})}
                             style = {styles.dialogTextIn}
                             placeholder = 'Rest Time'
+                            keyboardType = 'numeric'
+                            returnKeyType="done"
                         />
                         
                     </DialogContent>
                 </Dialog>
+                {/* DIALOG FOR EDIT */}
+                <Dialog
+               width = {.7}
+               height = {.5}
+               visible={this.state.visible}
+               onTouchOutside={() => {
+               this.setState({ visible: false });
+               }}
+               footer={
+                   <DialogFooter>
+                       
+                     <DialogButton
+                       text="Cancel"
+                       bordered
+                       onPress={() => {
+                           this.setState({ visible: false });
+                         }}
+                       key="button-1"
+                       alignItems = 'bottom'
+                       justifyContent = 'bottom'
+                       bottom = {0}
+                     />
+                     <DialogButton
+                       text="Update"
+                       bordered
+                     onPress={this.updateWorkout.bind(this)}
+                       key="button-2"
+                       alignItems = 'bottom'
+                       justifyContent = 'bottom'
+                     />
+                   </DialogFooter>
+                 }>
+               <DialogContent
+                   style={{
+                       backgroundColor: '#F7F7F8',
+                       width: '100%',
+                       height: '85%',
+                       alignItems: "center",
+                   }}>
+                   <Text style = {styles.dialogTitle}>
+                       Exercise:
+                   </Text>
+                   <TextInput
+                      value={this.state.exerciseNameText}
+                     onChangeText={(exerciseNameText) => this.setState({exerciseNameText})}
+                       style = {styles.dialogTextIn}
+                       placeholder = 'Exercise'
+                   />
+
+                    <Text style = {styles.dialogTitle}>
+                       Number of Sets
+                   </Text>
+                   <TextInput
+                value={this.state.numOfSetsText}
+                    onChangeText={(numOfSetsText) => this.setState({numOfSetsText})}
+                       style = {styles.dialogTextIn}
+                       placeholder = 'Sets'
+                       keyboardType = 'numeric'
+                       returnKeyType="done"
+                   />
+
+                    <Text style = {styles.dialogTitle}>
+                       Number of Reps:
+
+                   </Text>
+                   <TextInput
+                    value={this.state.numOfRepsText}
+                      onChangeText={(numOfRepsText) => this.setState({numOfRepsText})}
+                       style = {styles.dialogTextIn}
+                       placeholder = 'Reps'
+                       keyboardType = 'numeric'
+                       returnKeyType="done"
+                   />
+
+                    <Text style = {styles.dialogTitle}>
+                       Rest Time:
+                   </Text>
+                   <TextInput
+                    value={this.state.restTimeText}
+                     onChangeText={(restTimeText) => this.setState({restTimeText})}
+                       style = {styles.dialogTextIn}
+                       placeholder = 'Rest Time'
+                       keyboardType = 'numeric'
+                       returnKeyType="done"
+                   />                  
+               </DialogContent>
+           </Dialog>
             </View>
             <View style ={styles.finishButton}>
                 <Button  onPress={()=>this.finishButton()}
