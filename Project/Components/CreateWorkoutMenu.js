@@ -70,6 +70,18 @@ export default class CreateWorkoutMenu extends Component  {
             alert("Please fill out all the workout fields")
             return
         }
+        if (isNaN(parseInt(this.state.numOfRepsText))==true || parseInt(this.state.numOfRepsText)<0){
+            alert("Please make sure that reps is a postive number")
+            return
+        }
+        if (isNaN(parseInt(this.state.restTimeText))==true|| parseInt(this.state.restTimeText)<0){
+            alert("Please make sure that rest time is a number")
+            return
+        }
+        if (isNaN(parseInt(this.state.numOfSetsText))==true || parseInt(this.state.numOfSetsText)<0){
+            alert("Please make sure that sets is a number")
+            return
+        }
         else{
         this.setState({visibleAdd:false})
         }
@@ -209,6 +221,8 @@ render(){
                             onChangeText={(numOfSetsText) => this.setState({numOfSetsText})}
                             style = {styles.dialogTextIn}
                             placeholder = 'Sets'
+                            keyboardType = 'numeric'
+                            returnKeyType="done"
                         />
 
                          <Text style = {styles.dialogTitle}>
@@ -220,6 +234,8 @@ render(){
                             onChangeText={(numOfRepsText) => this.setState({numOfRepsText})}
                             style = {styles.dialogTextIn}
                             placeholder = 'Reps'
+                            keyboardType = 'numeric'
+                            returnKeyType="done"
                         />
 
                          <Text style = {styles.dialogTitle}>
@@ -231,6 +247,8 @@ render(){
                             onChangeText={(restTimeText) => this.setState({restTimeText})}
                             style = {styles.dialogTextIn}
                             placeholder = 'Rest Time'
+                            keyboardType = 'numeric'
+                            returnKeyType="done"
                         />
                         
                     </DialogContent>
@@ -292,6 +310,8 @@ render(){
                     onChangeText={(numOfSetsText) => this.setState({numOfSetsText})}
                        style = {styles.dialogTextIn}
                        placeholder = 'Sets'
+                       keyboardType = 'numeric'
+                       returnKeyType="done"
                    />
 
                     <Text style = {styles.dialogTitle}>
@@ -303,6 +323,8 @@ render(){
                       onChangeText={(numOfRepsText) => this.setState({numOfRepsText})}
                        style = {styles.dialogTextIn}
                        placeholder = 'Reps'
+                       keyboardType = 'numeric'
+                       returnKeyType="done"
                    />
 
                     <Text style = {styles.dialogTitle}>
@@ -313,6 +335,8 @@ render(){
                      onChangeText={(restTimeText) => this.setState({restTimeText})}
                        style = {styles.dialogTextIn}
                        placeholder = 'Rest Time'
+                       keyboardType = 'numeric'
+                       returnKeyType="done"
                    />                  
                </DialogContent>
            </Dialog>
