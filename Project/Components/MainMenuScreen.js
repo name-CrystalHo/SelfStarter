@@ -1,9 +1,10 @@
 import React, {Component} from "react";
-import { Alert,StyleSheet,Animated, Text, View, Image,Button, FlatList} from 'react-native';
+import { Alert,StyleSheet,Animated, Text, View, Image,Button,TextInput, FlatList} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { firebase } from './config'
 import ItemBox from './ItemBox'
+import Dialog, { DialogContent, DialogFooter, DialogButton} from 'react-native-popup-dialog';
 
 
 
@@ -15,14 +16,15 @@ export default class MainMenuScreen extends Component  {
         this.state = {
             listOfWorkouts: [] ,
             nav:false,
-
+            workoutHolder:"",
+            workoutText:'',
         }
       }
     gotoWorkout=(key)=>{
         this.props.navigation.navigate('Start Workout', {workoutName: key})
     
   };
-
+  
     deleteItem = (key,index) => {
 
     const user = firebase.auth().currentUser;
@@ -44,8 +46,6 @@ export default class MainMenuScreen extends Component  {
             snapshot.forEach((child) => {
                 tempList.push({
                     key:child.key,
-                    name: child.val(),
-        
                   })
                 })
                 this.setState({listOfWorkouts:tempList})
@@ -69,17 +69,21 @@ export default class MainMenuScreen extends Component  {
                 keyExtractor={(item)=>item.key}
                 renderItem={({item,index})=>{             
                     return (        
-                     <ItemBox data={item} handleDelete={() => this.deleteItem(item.key,index)} handleNavigate={() =>this.gotoWorkout(item.key)}  /> 
+                     <ItemBox data={item} handleDelete={() => this.deleteItem(item.key,index)} handleNavigate={() =>this.gotoWorkout(item.key)} 
+                     handleEdit={()=>this.setState(
+                    {visible:true,
+                      workoutHolder:item.key,
+                    workoutText:item.key
+                    })}  /> 
                     );
                 }}
                 
                /> 
-            </View>        
-
             <View style={styles.workoutButton}>
             <Button style = {styles.newWorkoutText} onPress={()=>this.props.navigation.navigate('Create Workout')} title="Create New Workout"></Button>
             </View>
-        </View>
+            </View>
+           </View>  
     );
 }
 }

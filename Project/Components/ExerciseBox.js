@@ -45,11 +45,13 @@ const ItemBox = (props) => {
   };
   return (
 
-    <Swipeable renderLeftActions={leftSwipe} >    
+    <Swipeable renderLeftActions={leftSwipe}>    
         <TouchableOpacity  style={styles.myButton}
     onPress={props.handleNavigate}
    >
-       <Text>{props.data.key}</Text> 
+       <Text>Exercise:{props.data.name}</Text>
+       <Text>Reps: {props.data.rep} Sets: {props.data.set}</Text>
+       <Text> Rest: {props.data.rest} </Text>
     </TouchableOpacity>
      </Swipeable>
 
@@ -66,7 +68,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#ff5c5c",
         padding: 10,
         marginVertical: 8,
-        height:60,
+        height:70,
         width: 300,
         alignItems: "center",
         justifyContent: "center",
@@ -92,7 +94,7 @@ const styles = StyleSheet.create({
     backgroundColor:"red",
     justifyContent:"center",
     width:100,
-    height:60,
+    height:70,
     padding: 10,
     marginVertical: 8,
     alignItems:"center",

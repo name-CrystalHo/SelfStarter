@@ -27,29 +27,26 @@ const ItemBox = (props) => {
       </TouchableOpacity>
     );
   };
-  const rightSwipe = (progress, dragX) => {
-    const scale = dragX.interpolate({
-      inputRange: [0, 100],
-      outputRange: [0, 1],
-      extrapolate: 'clamp',
-    });
+  const rightSwipe=()=>{
     return (
       <TouchableOpacity onPress={props.handleEdit} activeOpacity={0.6}>
         <View style={styles.editBox}>
-          <Animated.Text style={{transform: [{scale: scale}]}}>
+          <Text>
             Edit
-          </Animated.Text>
+            </Text>
         </View>
       </TouchableOpacity>
     );
   };
   return (
 
-    <Swipeable renderLeftActions={leftSwipe} >    
+    <Swipeable renderLeftActions={leftSwipe} renderRightActions={rightSwipe}>    
         <TouchableOpacity  style={styles.myButton}
     onPress={props.handleNavigate}
    >
-       <Text>{props.data.key}</Text> 
+        <Text>Exercise:{props.data.name}</Text>
+       <Text>Reps: {props.data.rep} Sets: {props.data.set}</Text>
+       <Text> Rest: {props.data.rest} </Text>
     </TouchableOpacity>
      </Swipeable>
 
