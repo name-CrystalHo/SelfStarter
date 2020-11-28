@@ -61,7 +61,13 @@ export default class MainMenuScreen extends Component  {
                 <Image style = {styles.settingButton} source={require('../images/settings.png')} />
                 </TouchableOpacity>
             </View>
-            <Text style = {styles.titleText}>Your Workouts</Text>
+            <View style = {styles.workoutsContainer}>
+                <Button
+                        title="Posted Workouts"
+                        onPress={()=>this.props.navigation.navigate('Posted Workouts')}>
+                </Button>
+            </View>
+            <Text style = {styles.titleText}>Your Workou</Text>
             
             <View style = {styles.workoutSelect}>
             <FlatList
@@ -152,6 +158,12 @@ const styles = StyleSheet.create({
        fontWeight: 'bold',
        fontSize: 18,
        width:"10%"
+    },
+    workoutsContainer: {
+        width: '93%',
+        height: 50,
+        justifyContent: "flex-start",
+        marginTop:"4%"
     },
    
   });
