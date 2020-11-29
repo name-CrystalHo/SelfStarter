@@ -1,7 +1,6 @@
 import React, {Component} from "react";
-import { Content, Item,StyleSheet, Text, View, Switch, Image , TextInput,FlatList} from 'react-native';
+import { Alert ,Button,Content, Item,StyleSheet, Text, View, Switch, Image , TextInput,FlatList,navigation} from 'react-native';
 import Dialog, { DialogContent, DialogFooter, DialogButton} from 'react-native-popup-dialog';
-import { Button } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { firebase } from './config'
 import {Container,List,ListItem, Icon} from 'native-base'
@@ -37,6 +36,15 @@ export default class CreateWorkoutMenu extends Component  {
           });
         this.setState({visible:false})
       };
+      cancelButton(){
+        // console.log(this.state.workoutText,"sjdfksd")
+        const user = firebase.auth().currentUser;
+        const uid = user.uid;
+        const database = firebase.database();
+        database.ref('users/' + uid + "/" + this.state.workoutText).remove()        
+        this.props.navigation.navigate('Main Menu') 
+      };
+     
     deleteItem = (key,index) => {
 
         const user = firebase.auth().currentUser;
@@ -105,7 +113,26 @@ export default class CreateWorkoutMenu extends Component  {
 
       }
       
-      componentWillMount () {
+      componentWillMount () {   
+            //   this.props.navigation.addListener('beforeRemove', (e) => {
+            //     e.preventDefault();
+            //     Alert.alert(
+            //       'Discard changes?',
+            //       "Click on Finish to save",
+            //       [
+            //         {
+            //           text: "Cancel",
+            //           onPress: () => console.log("Cancel Pressed"),
+            //           style: "cancel"
+            //         },
+            //         { text: "OK", onPress:this.cancelButton,onPress: () => this.props.navigation.dispatch(e.data.action)},
+            //         // {
+            //         //     onPress: () => this.props.navigation.dispatch(e.data.action),
+                  
+            //       ],
+            //       { cancelable: false }
+            //     );
+            //   })
         const user = firebase.auth().currentUser;
         const uid = user.uid;
         const database = firebase.database();
@@ -124,7 +151,7 @@ export default class CreateWorkoutMenu extends Component  {
                 this.setState({list:tempList})
             })        
         }
-        
+    
     }
 render(){
     return (
@@ -344,9 +371,8 @@ render(){
             <View style ={styles.finishButton}>
                 <Button  onPress={()=>this.finishButton()}
                 title="Finish"></Button>
-            {/* <TouchableOpacity  onPress={()=>this.finishButton()}>
-                <Text style = {styles.finishText}>Finish</Text>
-            </TouchableOpacity> */}
+                  <Button  onPress={()=>this.cancelButton()}
+                title="Cancel"></Button>
             </View>
 
         </View>

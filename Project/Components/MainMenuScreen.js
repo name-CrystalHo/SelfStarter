@@ -18,6 +18,7 @@ export default class MainMenuScreen extends Component  {
             nav:false,
             workoutHolder:"",
             workoutText:'',
+            creating:false,
         }
       }
     gotoWorkout=(key)=>{
@@ -26,7 +27,7 @@ export default class MainMenuScreen extends Component  {
   };
   
     deleteItem = (key,index) => {
-
+    console.log(key)
     const user = firebase.auth().currentUser;
     const uid = user.uid;
     const database = firebase.database();
@@ -53,7 +54,8 @@ export default class MainMenuScreen extends Component  {
             
     }
     render(){
-    return (
+    if(this.state.creating===false){
+     return (
         
         <View style ={styles.menu}>
             <View style = {styles.settingsContainer}>
@@ -91,6 +93,8 @@ export default class MainMenuScreen extends Component  {
             </View>
            </View>  
     );
+            }
+            
 }
 }
 const styles = StyleSheet.create({
