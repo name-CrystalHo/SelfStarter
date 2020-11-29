@@ -30,6 +30,8 @@ import Settings from "./Components/SettingsMenu"
 import StartWorkout from "./Components/startWorkout"
 import WorkingOut from "./Components/workingOut"
 import FinishWorkout from "./Components/FinishWorkout"
+import PostedWorkouts from "./Components/PostedWorkouts"
+import DownloadWorkout from "./Components/DownloadWorkout";
 
 const Stack=createStackNavigator();
 
@@ -60,6 +62,8 @@ export default class App extends Component {
             <Stack.Screen name="Start Workout" component={StartWorkout}></Stack.Screen>
             <Stack.Screen name="Working Out" component={WorkingOut}></Stack.Screen>
             <Stack.Screen name="Finish Workout" component={FinishWorkout}></Stack.Screen>
+            <Stack.Screen name="Posted Workouts" component={PostedWorkouts}></Stack.Screen>
+            <Stack.Screen name="Download Workout" component={DownloadWorkout}></Stack.Screen>
           </Stack.Navigator>
         </NavigationContainer>
     );

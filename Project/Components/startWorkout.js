@@ -67,6 +67,21 @@ export default class StartWorkoutScreen extends Component  {
             })        
             
     }
+    postWorkout(){
+      
+      //console.log(this.state.listOfExercises)
+      const tempList = this.state.listOfExercises
+      //console.log(tempList)
+      const database = firebase.database();
+      tempList.forEach(element => 
+        database.ref("workouts/" + this.state.workoutName).push({
+        exerciseName: element["name"],
+        numOfSets: element["set"],
+        numOfReps: element["rep"],
+        restTime: element["rest"],
+      }))
+      alert("Your workout has been successfully posted!")
+    }
     render(){
         return (
             <View style = {styles.container}>
@@ -95,6 +110,12 @@ export default class StartWorkoutScreen extends Component  {
                      <Button
                      title="Start Workout"
                      onPress={()=>this.props.navigation.navigate('Working Out', {workoutName: this.state.workoutName})}></Button>
+                </View>
+                <View style ={styles.postButton}>
+                     <Button
+                     title="Post Workout"
+                     onPress={()=>this.postWorkout()}
+                     ></Button>
                 </View>
                 <Dialog
                width = {.7}
@@ -217,7 +238,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         position: 'absolute',
-        top: '85%'
+        top: '75%'
     },
     startText: {
        color: '#61D4D4',
@@ -293,6 +314,15 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginTop: '15%',
     },
+    postButton: {
+      width: '45%',
+      height: 50,
+      // backgroundColor: "#A9A9B0", 
+      alignItems: "center",
+      justifyContent: "center",
+      position: 'absolute',
+      top: '83%'
+  },
 
 
 }
