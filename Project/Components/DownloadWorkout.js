@@ -129,7 +129,7 @@ export default class DownloadWorkout extends Component  {
                 alignItems: "center",
                 justifyContent: "center",
                 position: 'absolute',
-                top: '75%'
+                bottom: '10%'
             },
             startText: {
                color: '#61D4D4',
