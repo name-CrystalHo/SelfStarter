@@ -72,6 +72,9 @@ export default class Home extends Component{
         <Button title="Go to Main Menu" 
         onPress={()=>this.props.navigation.navigate('Main Menu')}>
         </Button>
+        <Button title="Check Total Steps" 
+        onPress={()=>this.props.navigation.navigate('Pedometer')}>
+        </Button>
       </View>
       )
     }
