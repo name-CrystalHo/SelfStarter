@@ -31,11 +31,11 @@ export default class SettingsMenu extends Component{
         const user = firebase.auth().currentUser;
         const uid = user.uid;
         
-        //IDK
         const database = firebase.database();
-        database.ref("users/"+uid + "/" + this.state.workoutText).push({
+        database.ref("rating/"+uid).push({
           rating: this.state.rating,
         });
+        alert("Thank you for reviewing the app!")
       }
     
     signout=()=>{

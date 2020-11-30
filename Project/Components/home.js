@@ -75,6 +75,7 @@ export default class Home extends Component{
         <Button title="Check Total Steps" 
         onPress={()=>this.props.navigation.navigate('Pedometer')}>
         </Button>
+        
       </View>
       )
     }
