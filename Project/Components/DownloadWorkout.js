@@ -12,7 +12,7 @@ export default class DownloadWorkout extends Component  {
         this.state = {
             workoutName: (props.route.params.workoutName),
             listOfExercises: [],
-            workoutText:'',
+            workoutText: '',
             exerciseNameText: '',
             numOfSetsText: '',
             numOfRepsText: '',
@@ -73,7 +73,7 @@ export default class DownloadWorkout extends Component  {
                             <EditBox data={item} handleDelete={() => this.deleteItem(item.key,index)}
                             handleEdit={()=>this.setState(
                            {visible:true,
-                            keyHold:item.key,  
+                            keyHold: item.key,  
                             exerciseNameText: item.name,
                             numOfSetsText: item.set,
                             numOfRepsText: item.rep,

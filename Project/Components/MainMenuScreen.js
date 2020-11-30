@@ -60,15 +60,13 @@ export default class MainMenuScreen extends Component  {
         <View style ={styles.menu}>
             <View style = {styles.settingsContainer}>
                 <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Settings')}>
-                <Image style = {styles.settingButton} source={require('../images/settings.png')} />
+                    <Image style = {styles.settingButton} source={require('../images/settings.png')} />
+                </TouchableOpacity>
+                <TouchableOpacity   onPress={()=>this.props.navigation.navigate('Posted Workouts')}>
+                    <Image style = {styles.settingButton} source={require('../assets/lookup.png')} />
                 </TouchableOpacity>
             </View>
-            <View style = {styles.workoutsContainer}>
-                <Button
-                        title="Posted Workouts"
-                        onPress={()=>this.props.navigation.navigate('Posted Workouts')}>
-                </Button>
-            </View>
+        
             <Text style = {styles.titleText}>Your Workouts</Text>
             
             <View style = {styles.workoutSelect}>
@@ -145,7 +143,8 @@ const styles = StyleSheet.create({
     settingsContainer: {
         width: '93%',
         height: 50,
-        justifyContent: "flex-start",
+        justifyContent: "space-between",
+        flexDirection: 'row',
         marginTop:"4%"
     },
     settingButton: {
