@@ -4,7 +4,7 @@ import Dialog, { DialogContent, DialogFooter, DialogButton} from 'react-native-p
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { firebase } from './config'
 import {Container,List,ListItem, Icon} from 'native-base'
-import ExerciseBox from './ExerciseBox'
+import EditBox from './EditBox'
 
 
 export default class CreateWorkoutMenu extends Component  {
@@ -30,7 +30,7 @@ export default class CreateWorkoutMenu extends Component  {
         console.log(this.state.keyHold)
         firebase.database().ref('users/' + uid + "/" + this.state.workoutText+"/"+this.state.keyHold).set({
             exerciseName: this.state.exerciseNameText,
-            nameOfReps:this.state.numOfRepsText,
+            numOfReps:this.state.numOfRepsText,
             numOfSets:this.state.numOfSetsText,
             restTime:this.state.restTimeText,
           });
@@ -46,7 +46,7 @@ export default class CreateWorkoutMenu extends Component  {
       };
      
     deleteItem = (key,index) => {
-
+        console.log(this.state.workoutText+"/"+key)
         const user = firebase.auth().currentUser;
         const uid = user.uid;
         const database = firebase.database();
@@ -98,61 +98,30 @@ export default class CreateWorkoutMenu extends Component  {
     
         const database = firebase.database();
         database.ref("users/"+uid + "/" + this.state.workoutText).push({
+          key: firebase.database().ref().child("value").push().key,
           exerciseName: this.state.exerciseNameText,
           numOfSets: this.state.numOfSetsText,
           numOfReps: this.state.numOfRepsText,
           restTime: this.state.restTimeText,
         });
-        this.state.list.push({
-            key: firebase.database().ref().child("value").push().key,
-            name: this.state.exerciseNameText,
-            rest: this.state.restTimeText,
-            rep:this.state.numOfRepsText,
-            set:this.state.numOfSetsText,
-        })
+        if (this.state.workoutText!=""){
+            database.ref(('users/' + uid + "/" + this.state.workoutText)).on('value', (snapshot) =>{
+               const tempList = []
+               snapshot.forEach((child) => {
+                   tempList.push({
+                       key:child.key,
+                       name: child.val().exerciseName,
+                       rest: child.val().restTime,
+                       rep:child.val().numOfReps,
+                       set:child.val().numOfSets,
+                     })
+                   })
+                   this.setState({list:tempList})
+               })        
+           }
 
       }
       
-      componentWillMount () {   
-            //   this.props.navigation.addListener('beforeRemove', (e) => {
-            //     e.preventDefault();
-            //     Alert.alert(
-            //       'Discard changes?',
-            //       "Click on Finish to save",
-            //       [
-            //         {
-            //           text: "Cancel",
-            //           onPress: () => console.log("Cancel Pressed"),
-            //           style: "cancel"
-            //         },
-            //         { text: "OK", onPress:this.cancelButton,onPress: () => this.props.navigation.dispatch(e.data.action)},
-            //         // {
-            //         //     onPress: () => this.props.navigation.dispatch(e.data.action),
-                  
-            //       ],
-            //       { cancelable: false }
-            //     );
-            //   })
-        const user = firebase.auth().currentUser;
-        const uid = user.uid;
-        const database = firebase.database();
-        if (this.state.workoutText!=""){
-         database.ref(('users/' + uid + "/" + this.state.workoutText)).on('value', (snapshot) =>{
-            const tempList = []
-            snapshot.forEach((child) => {
-                tempList.push({
-                    key:child.key,
-                    name: child.val().exerciseName,
-                    rest: child.val().restTime,
-                    rep:child.val().numOfReps,
-                    set:child.val().numOfSets,
-                  })
-                })
-                this.setState({list:tempList})
-            })        
-        }
-    
-    }
 render(){
     return (
         <View style = {styles.container}>
@@ -170,7 +139,7 @@ render(){
                 keyExtractor={(item)=>item.key}
                 renderItem={({item,index})=>{
                     return (        
-                        <ExerciseBox data={item} handleDelete={() => this.deleteItem(item.key,index)}
+                        <EditBox data={item} handleDelete={() => this.deleteItem(item.key,index)}
                         handleEdit={()=>this.setState(
                        {visible:true, 
                         keyHold:item.key,
@@ -417,7 +386,7 @@ const styles = StyleSheet.create({
         marginTop: '5%',
         textAlign: "center",
         fontWeight: 'bold',
-        backgroundColor: '#A9A9B0'
+        backgroundColor: "#ff5c5c"
         
     },
     reminderContainer: {

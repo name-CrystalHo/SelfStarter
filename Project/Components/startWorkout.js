@@ -33,11 +33,11 @@ export default class StartWorkoutScreen extends Component  {
         this.setState({visible:false})
       };
     deleteItem = (key,index) => {
-
+        console.log(key)
         const user = firebase.auth().currentUser;
         const uid = user.uid;
         const database = firebase.database();
-        database.ref('users/' + uid + "/" + this.state.workoutText+"/"+key).remove()
+        database.ref('users/' + uid + "/" + this.state.workoutName+"/"+key).remove()
         
         const arr = [...this.state.listOfExercises];
         arr.splice(index, 1);
@@ -152,6 +152,8 @@ export default class StartWorkoutScreen extends Component  {
                     onChangeText={(numOfSetsText) => this.setState({numOfSetsText})}
                        style = {styles.dialogTextIn}
                        placeholder = 'Sets'
+                       keyboardType = 'numeric'
+                       returnKeyType="done"
                    />
 
                     <Text style = {styles.dialogTitle}>
@@ -163,6 +165,8 @@ export default class StartWorkoutScreen extends Component  {
                       onChangeText={(numOfRepsText) => this.setState({numOfRepsText})}
                        style = {styles.dialogTextIn}
                        placeholder = 'Reps'
+                       keyboardType = 'numeric'
+                       returnKeyType="done"
                    />
 
                     <Text style = {styles.dialogTitle}>
@@ -173,6 +177,8 @@ export default class StartWorkoutScreen extends Component  {
                      onChangeText={(restTimeText) => this.setState({restTimeText})}
                        style = {styles.dialogTextIn}
                        placeholder = 'Rest Time'
+                       keyboardType = 'numeric'
+                       returnKeyType="done"
                    />                  
                </DialogContent>
            </Dialog>
