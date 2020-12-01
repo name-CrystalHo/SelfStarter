@@ -8,7 +8,7 @@ import Dialog, { DialogContent, DialogFooter, DialogButton} from 'react-native-p
 
 
 
-export default class MainMenuScreen extends Component  {
+export default class PostWorkout extends Component  {
 
     constructor(props) {
         super(props);
@@ -18,31 +18,13 @@ export default class MainMenuScreen extends Component  {
             nav:false,
             workoutHolder:"",
             workoutText:'',
-            creating:false,
         }
       }
-    gotoWorkout=(key)=>{
-        this.props.navigation.navigate('Start Workout', {workoutName: key})
-    
-  };
-  
-    deleteItem = (key,index) => {
-    console.log(key)
-    const user = firebase.auth().currentUser;
-    const uid = user.uid;
-    const database = firebase.database();
-    database.ref('users/' + uid + "/" + key).remove()
-    
-    const arr = [...this.state.listOfWorkouts];
-    arr.splice(index, 1);
-    this.setState({listOfWorkouts:arr});
-  };
- 
     componentWillMount () {
         const user = firebase.auth().currentUser;
         const uid = user.uid;
         const database = firebase.database();
-        database.ref(('users/' + uid)).on('value', (snapshot) =>{
+        database.ref(('workouts/' )).on('value', (snapshot) =>{
             const tempList = []
             snapshot.forEach((child) => {
                 tempList.push({
@@ -53,21 +35,15 @@ export default class MainMenuScreen extends Component  {
             })        
             
     }
-    render(){
-    if(this.state.creating===false){
-     return (
+    gotoWorkout=(key)=>{
+        this.props.navigation.navigate('Download Workout', {workoutName: key})
+    
+  };
+  render(){
+    return (
         
         <View style ={styles.menu}>
-            <View style = {styles.settingsContainer}>
-                <TouchableOpacity  onPress={()=>this.props.navigation.navigate('Settings')}>
-                    <Image style = {styles.settingButton} source={require('../images/settings.png')} />
-                </TouchableOpacity>
-                <TouchableOpacity   onPress={()=>this.props.navigation.navigate('Posted Workouts')}>
-                    <Image style = {styles.settingButton} source={require('../assets/lookup.png')} />
-                </TouchableOpacity>
-            </View>
-        
-            <Text style = {styles.titleText}>Your Workouts</Text>
+            <Text style = {styles.titleText}>Posted Workouts</Text>
             
             <View style = {styles.workoutSelect}>
             <FlatList
@@ -86,15 +62,14 @@ export default class MainMenuScreen extends Component  {
                 
                /> 
             <View style={styles.workoutButton}>
-            <Button style = {styles.newWorkoutText} onPress={()=>this.props.navigation.navigate('Create Workout')} title="Create New Workout"></Button>
             </View>
             </View>
            </View>  
     );
-            }
-            
 }
 }
+
+  
 const styles = StyleSheet.create({
 
     workoutButton:{
@@ -136,15 +111,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 40,
         marginTop: '3%',
-        top: -30
     },
 
     //Will use this later for lookup as well
     settingsContainer: {
         width: '93%',
         height: 50,
-        justifyContent: "space-between",
-        flexDirection: 'row',
+        justifyContent: "flex-start",
         marginTop:"4%"
     },
     settingButton: {

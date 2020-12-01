@@ -19,6 +19,24 @@ export default class SettingsMenu extends Component{
         }
     
     }
+    makeReview(){ 
+        
+        if (isNaN(parseInt(this.state.rating))==true || parseInt(this.state.rating)<0 ||  parseInt(this.state.rating) > 10 ){
+            alert("Please make sure that the rating is a number between 0 and 10")
+            return
+        }
+        else{
+            this.setState({visibleAdd:false})
+        }
+        const user = firebase.auth().currentUser;
+        const uid = user.uid;
+        
+        const database = firebase.database();
+        database.ref("rating/"+uid).push({
+          rating: this.state.rating,
+        });
+        alert("Thank you for reviewing the app!")
+      }
     
     signout=()=>{
         firebase.auth().signOut() // to clear the token 
@@ -139,15 +157,78 @@ export default class SettingsMenu extends Component{
 
                     </DialogContent>
                 </Dialog>
-               
-            </View>
-            <View style ={styles.logoutButton}>
-                <Button onPress={this.signout} title="Log Out"></Button>
-                {/* <TouchableOpacity onPress={this.signout}>
-                <Text style = {styles.logoutText}>Log Out</Text>
+                <View style={styles.reviewButton}>
+                    <Button
+                        title="Review App"
+                        onPress={() => {
+                        this.setState({ visibleAdd: true });
+                        }}
+                    />
+                    <Dialog
+                        width = {.7}
+                        height = {.17}
+                        visible={this.state.visibleAdd}
+                        onTouchOutside={() => {
+                        this.setState({ visibleAdd: false });
+                        }}
+                        footer={
+                            <DialogFooter>    
+                            <DialogButton
+                                text="Cancel"
+                                bordered
+                                onPress={() => {
+                                    this.setState({ visibleAdd: false });
+                                }}
+                                key="button-1"
+                                alignItems = 'bottom'
+                                justifyContent = 'bottom'
+                                bottom = {0}
+                            />
+                            <DialogButton
+                                text="Finish"
+                                bordered
+                                //IDK 
+                                onPress={this.makeReview.bind(this)}
+                                key="button-2"
+                                alignItems = 'bottom'
+                                justifyContent = 'bottom'
+                            />
+                            </DialogFooter>
+                         }>
+                        <DialogContent
+                            style={{
+                            backgroundColor: '#F7F7F8',
+                            width: '100%',
+                            height: '40%',
+                            alignItems: "center",
+                            marginBottom: '15%',
+                            marginBottom: '15%'
+                            }}>
 
-                </TouchableOpacity> */}
+                            <Text style = {styles.dialogTitle}>
+                                Rate out of 10:
+
+                            </Text>
+                            <TextInput
+                                value={this.state.rating}
+                                onChangeText={(rating) => this.setState({rating})}
+                                style = {styles.dialogTextIn}
+                                placeholder = 'Rating'
+                                keyboardType = 'numeric'
+                                returnKeyType="done"
+                            />
+                        </DialogContent>
+                    </Dialog>
+                </View>          
+                <View style ={styles.logoutButton}>
+                    <Button onPress={this.signout} title="Log Out"></Button>
+                    {/* <TouchableOpacity onPress={this.signout}>
+                    <Text style = {styles.logoutText}>Log Out</Text>
+
+                    </TouchableOpacity> */}
+                </View>
             </View>
+           
         </View>
         
     );
@@ -186,7 +267,7 @@ const styles = StyleSheet.create({
         top: '35%'
     },
     logoutText: {
-       color: '#8E1600',
+       color: '#FF0000',
        fontWeight: 'bold',
        fontSize: 18
     },
@@ -200,7 +281,7 @@ const styles = StyleSheet.create({
         width: '85%',
         height: '75%',
         alignItems: "center",
-        marginTop: '25%'
+        marginTop: '10%'
     },
     dialogTitle: {
         fontWeight: 'bold',
@@ -219,4 +300,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#A9A9B0'
         
     },
+    reviewButton: {
+        marginTop: '19%',
+        marginBottom: '0%'
+    }
 });
