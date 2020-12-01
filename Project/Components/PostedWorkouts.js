@@ -3,7 +3,7 @@ import { Alert,StyleSheet,Animated, Text, View, Image,Button,TextInput, FlatList
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Swipeable from "react-native-gesture-handler/Swipeable";
 import { firebase } from './config'
-import ItemBox from './ItemBox'
+import DownBox from './downBox'
 import Dialog, { DialogContent, DialogFooter, DialogButton} from 'react-native-popup-dialog';
 
 
@@ -18,19 +18,48 @@ export default class PostWorkout extends Component  {
             nav:false,
             workoutHolder:"",
             workoutText:'',
+            likes:"",
+            listofUsers:[],
         }
       }
+    updateLike(key,like,users)
+    {
+        const user = firebase.auth().currentUser;
+        const uid = user.uid;
+        var list=[];
+        const database = firebase.database();
+        database.ref(('workouts/'+key+"/userslike")).on('value', function(snap) 
+        { list = snap.val(); })
+        if(list.indexOf(uid)>-1)
+        {
+            alert("You either posted this or liked it already")
+        }
+        // console.log(this.state.listofUsers)
+        else{
+        firebase.database().ref('workouts/'+key+"/").update({
+            likes: like+1,
+          });
+          list.push(uid)
+          
+          firebase.database().ref('workouts/'+key).update(
+           {userslike:list} 
+          );
+        }
+    }
     componentWillMount () {
         const user = firebase.auth().currentUser;
         const uid = user.uid;
         const database = firebase.database();
         database.ref(('workouts/' )).on('value', (snapshot) =>{
             const tempList = []
-            snapshot.forEach((child) => {
+            snapshot.forEach((child)=> {
                 tempList.push({
                     key:child.key,
+                    like:child.val().likes,
+                    userslike:child.val().userslike
                   })
                 })
+                tempList.sort(function(a,b){return b.like-a.like})
                 this.setState({listOfWorkouts:tempList})
             })        
             
@@ -51,12 +80,8 @@ export default class PostWorkout extends Component  {
                 keyExtractor={(item)=>item.key}
                 renderItem={({item,index})=>{             
                     return (        
-                     <ItemBox data={item} handleDelete={() => this.deleteItem(item.key,index)} handleNavigate={() =>this.gotoWorkout(item.key)} 
-                     handleEdit={()=>this.setState(
-                    {visible:true,
-                      workoutHolder:item.key,
-                    workoutText:item.key
-                    })}  /> 
+                     <DownBox data={item} handleNavigate={() =>this.gotoWorkout(item.key) } 
+                     handleLike={()=>this.updateLike(item.key,item.like,item.userslike)}  /> 
                     );
                 }}
                 

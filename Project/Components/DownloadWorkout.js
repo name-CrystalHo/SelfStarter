@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, Image,Button, FlatList,TextInput} from 'react-n
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { firebase } from './config'
 import Dialog, { DialogContent, DialogFooter, DialogButton} from 'react-native-popup-dialog';
-import EditBox from './EditBox'
+import downBox from './downBox'
 
 export default class DownloadWorkout extends Component  {
     constructor(props) {
@@ -12,7 +12,8 @@ export default class DownloadWorkout extends Component  {
         this.state = {
             workoutName: (props.route.params.workoutName),
             listOfExercises: [],
-            workoutText: '',
+            listofLikes:[],
+            workoutText:'',
             exerciseNameText: '',
             numOfSetsText: '',
             numOfRepsText: '',
@@ -29,7 +30,7 @@ export default class DownloadWorkout extends Component  {
         // items.on("value", snapshot =>{
         //     tempList = snapshot.val()
         // })
-        database.ref(("workouts/" + this.state.workoutName)).on('value', (snapshot) =>{
+        database.ref(("workouts/" + this.state.workoutName+"/workouts")).on('value', (snapshot) =>{
             const tempList = []
             snapshot.forEach((child) => {
                 tempList.push({
@@ -69,17 +70,13 @@ export default class DownloadWorkout extends Component  {
                     data={this.state.listOfExercises}
                     keyExtractor={(item)=>item.key}
                     renderItem={({item,index})=>{
-                        return (       
-                            <EditBox data={item} handleDelete={() => this.deleteItem(item.key,index)}
-                            handleEdit={()=>this.setState(
-                           {visible:true,
-                            keyHold: item.key,  
-                            exerciseNameText: item.name,
-                            numOfSetsText: item.set,
-                            numOfRepsText: item.rep,
-                            restTimeText: item.rest,
-                            
-                           })}  /> 
+                        return ( 
+                            <View style={styles.myButton}
+                           >
+                                <Text>Exercise:{item.name}</Text>
+                               <Text>Reps: {item.rep} Sets: {item.set}</Text>
+                               <Text> Rest: {item.rest} </Text>
+                            </View>
                            );
                     }}
                 />   
@@ -102,6 +99,17 @@ export default class DownloadWorkout extends Component  {
                 marginBottom: "10%",
                 marginTop: "10%"
             },
+            
+    myButton:{
+        backgroundColor: "#ff5c5c",
+        padding: 10,
+        marginVertical: 8,
+        height:60,
+        width: 300,
+        alignItems: "center",
+        justifyContent: "center",
+        color:"black",  
+      },
             titleText: {
                 fontWeight: 'bold',
                 fontSize: 40,

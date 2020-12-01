@@ -47,11 +47,6 @@ export default class StartWorkoutScreen extends Component  {
         const user = firebase.auth().currentUser;
         const uid = user.uid;
         const database = firebase.database();
-        //const items = database.ref("users/" + uid)
-        // var tempList = []
-        // items.on("value", snapshot =>{
-        //     tempList = snapshot.val()
-        // })
         database.ref(('users/' + uid + "/" + this.state.workoutName)).on('value', (snapshot) =>{
             const tempList = []
             snapshot.forEach((child) => {
@@ -74,12 +69,16 @@ export default class StartWorkoutScreen extends Component  {
       //console.log(tempList)
       const database = firebase.database();
       tempList.forEach(element => 
-        database.ref("workouts/" + this.state.workoutName).push({
+        database.ref("workouts/" +this.state.workoutName+"/workouts").push({
         exerciseName: element["name"],
         numOfSets: element["set"],
         numOfReps: element["rep"],
         restTime: element["rest"],
       }))
+        database.ref("workouts/" +this.state.workoutName+"/likes").set(0)
+        const user = firebase.auth().currentUser
+        const uid = user.uid;
+        database.ref("workouts/" +this.state.workoutName+"/userslike").set([uid])
       alert("Your workout has been successfully posted!")
     }
     render(){
