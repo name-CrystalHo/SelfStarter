@@ -285,7 +285,7 @@ render(){
                    style={{
                        backgroundColor: '#F7F7F8',
                        width: '100%',
-                       height: '91%',
+                       height: '88%',
                        alignItems: "center",
                    }}>
                    <Text style = {styles.dialogTitle}>
