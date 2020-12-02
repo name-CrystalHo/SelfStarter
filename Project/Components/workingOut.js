@@ -152,9 +152,17 @@ export default class WorkingOutScreen extends Component  {
             <View style = {styles.container}>
                 <Text style = {styles.titleText}>{this.state.currentExerciseName}</Text>
                 <View style = {styles.details}>
-                    <Text style = {styles.title}>{"Sets: " + this.state.currentSetCount}</Text>
-                    <Text style = {styles.title}>{"Reps: " + this.state.currentRepCount}</Text>
-                    <Text style = {styles.title}>{"Rest Time: " + this.state.currentResttime + " seconds"}</Text>
+                    <Text style = {styles.title}>{"Sets:"}</Text>
+                    <Text style = {styles.stepText} numberOfLines={1}
+                  adjustsFontSizeToFit>{this.state.currentSetCount}</Text>
+                    <Text style = {styles.title}>{"Reps:"}</Text>
+                    <Text style = {styles.stepText} numberOfLines={1}
+                  adjustsFontSizeToFit>{this.state.currentRepCount}</Text>
+                    <Text style = {styles.title}>{"Rest Time:"}</Text>
+                    <Text style = {styles.totalCountText} numberOfLines={1}
+                  adjustsFontSizeToFit>{this.state.currentResttime + " seconds"}</Text>
+
+                    
                 </View>
                 {this.state.countPressed>1 && 
                         <Text style = {styles.rest}>{"Rest : " + this.state.countDownVar }</Text>
@@ -184,10 +192,8 @@ const styles = StyleSheet.create({
     },
     titleText: {
         fontWeight: 'bold',
-        fontSize: 30,
-        marginTop: '6%',
-        textAlignVertical: "center",
-        textAlign: "center",
+        fontSize: 40,
+        marginTop: '15%',
     },
     title: {
         fontWeight: 'bold',
@@ -201,7 +207,7 @@ const styles = StyleSheet.create({
         textAlignVertical: "center",
         textAlign: "center",
         position: 'absolute',
-        top: '88%'
+        top: '80%'
     },
     startButton: {
         width: '45%',
@@ -224,5 +230,17 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         marginTop: '15%',    
-    }
+    },
+    stepText: {
+        fontWeight: 'bold',
+        fontSize: 60,
+        marginTop: '3%',
+        color: '#89cff0'
+      },
+      totalCountText: {
+        fontWeight: 'bold',
+        fontSize: 60,
+        marginTop: '3%',
+        color: '#FFB6C1'
+      },
 });
