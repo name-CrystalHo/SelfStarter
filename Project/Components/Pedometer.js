@@ -60,8 +60,11 @@ export default class PedometerScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style = {styles.titleText}>Steps taken in the last 24 hours: {this.state.pastStepCount}</Text>
-        <Text style = {styles.titleText}>Walk! And watch this go up: {this.state.currentStepCount}</Text>
+        <Text style = {styles.trueTitleText}>Pedometer</Text>
+        <Text style = {styles.titleText}>STEPS TAKEN:</Text>
+        <Text style = {styles.stepText}>{this.state.currentStepCount}</Text>
+        <Text style = {styles.totalText}>STEPS TODAY:</Text>
+        <Text style = {styles.totalCountText}>{this.state.pastStepCount}</Text>
       </View>
     );
   }
@@ -70,13 +73,34 @@ export default class PedometerScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 15,
     alignItems: 'center',
-    justifyContent: 'center',
+    //justifyContent: 'center',
   },
   titleText: {
     fontWeight: 'bold',
     fontSize: 20,
-    marginTop: '3%'
-},
+    marginTop: '30%'
+  },
+  stepText: {
+    fontWeight: 'bold',
+    fontSize: 100,
+    marginTop: '3%',
+    color: '#89cff0'
+  },
+  totalText: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    marginTop: '30%'
+  },
+  totalCountText: {
+    fontWeight: 'bold',
+    fontSize: 80,
+    marginTop: '3%',
+    color: '#FFB6C1'
+  },
+  trueTitleText: {
+    fontWeight: 'bold',
+    fontSize: 40,
+    marginTop: '15%',
+  }
 });

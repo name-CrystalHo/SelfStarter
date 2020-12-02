@@ -76,7 +76,7 @@ export default class DownloadWorkout extends Component  {
                         return ( 
                             <View style={styles.myButton}
                            >
-                                <Text>Exercise:{item.name}</Text>
+                                <Text>Exercise: {item.name}</Text>
                                <Text>Reps: {item.rep} Sets: {item.set}</Text>
                                <Text> Rest: {item.rest} </Text>
                             </View>
@@ -103,16 +103,16 @@ export default class DownloadWorkout extends Component  {
                 marginTop: "10%"
             },
             
-    myButton:{
-        backgroundColor: "#ff5c5c",
-        padding: 10,
-        marginVertical: 8,
-        height:60,
-        width: 300,
-        alignItems: "center",
-        justifyContent: "center",
-        color:"black",  
-      },
+            myButton:{
+                backgroundColor: "#ff5c5c",
+                padding: 10,
+                marginVertical: 8,
+                height:60,
+                width: 300,
+                alignItems: "center",
+                justifyContent: "center",
+                color:"black",  
+            },
             titleText: {
                 fontWeight: 'bold',
                 fontSize: 40,
