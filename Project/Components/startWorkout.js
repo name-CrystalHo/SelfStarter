@@ -76,6 +76,7 @@ export default class StartWorkoutScreen extends Component  {
         restTime: element["rest"],
       }))
         database.ref("workouts/" +this.state.workoutName+"/likes").set(0)
+        database.ref("workouts/" +this.state.workoutName+"/date").set(firebase.database.ServerValue.TIMESTAMP)
         const user = firebase.auth().currentUser
         const uid = user.uid;
         database.ref("workouts/" +this.state.workoutName+"/userslike").set([uid])

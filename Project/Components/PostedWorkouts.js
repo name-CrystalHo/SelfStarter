@@ -56,24 +56,59 @@ export default class PostWorkout extends Component  {
                 tempList.push({
                     key:child.key,
                     like:child.val().likes,
-                    userslike:child.val().userslike
+                    userslike:child.val().userslike,
+                    time:child.val().date,
                   })
                 })
+
                 tempList.sort(function(a,b){return b.like-a.like})
                 this.setState({listOfWorkouts:tempList})
             })        
             
     }
+
+    changeOrder(value){
+        const user = firebase.auth().currentUser;
+        const uid = user.uid;
+        const database = firebase.database();
+        database.ref(('workouts/' )).on('value', (snapshot) =>{
+            const tempList = []
+            snapshot.forEach((child)=> {
+                tempList.push({
+                    key:child.key,
+                    like:child.val().likes,
+                    userslike:child.val().userslike,
+                    time:child.val().date,
+                  })
+                })
+                if(value==="pop")
+                {
+                    tempList.sort(function(a,b){return b.like-a.like})
+                }
+                else{
+                    tempList.sort(function(a,b){return b.time-a.time})
+                }
+                this.setState({listOfWorkouts:tempList})
+            })        
+            
+    }
+       
+
     gotoWorkout=(key)=>{
-        this.props.navigation.navigate('Download Workout', {workoutName: key})
-    
+        this.props.navigation.navigate('Download Workout', {workoutName: key})  
   };
   render(){
     return (
         
-        <View style ={styles.menu}>
+        <View style ={styles.menu}> 
             <Text style = {styles.titleText}>Posted Workouts</Text>
-            
+            <View style ={styles.optionContainer}> 
+            <Button style="float:left" title="Popular"
+            onPress={()=>this.changeOrder("pop")}></Button>
+            <Button title="|"></Button>
+            <Button style="float:right"title="Recent"
+            onPress={()=>this.changeOrder("recent")}></Button>
+            </View>
             <View style = {styles.workoutSelect}>
             <FlatList
                 data={this.state.listOfWorkouts}
@@ -97,6 +132,13 @@ export default class PostWorkout extends Component  {
   
 const styles = StyleSheet.create({
 
+    optionContainer: {
+        width: '93%',
+        height: 50,
+        justifyContent: "center",
+        flexDirection: 'row',
+        marginTop:"4%"
+    },
     workoutButton:{
         marginTop:"2%",
         top: 20
