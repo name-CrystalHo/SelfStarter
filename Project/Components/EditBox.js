@@ -44,7 +44,7 @@ const ItemBox = (props) => {
         <TouchableOpacity  style={styles.myButton}
     onPress={props.handleNavigate}
    >
-        <Text>Exercise:{props.data.name}</Text>
+        <Text>Exercise: {props.data.name}</Text>
        <Text>Reps: {props.data.rep} Sets: {props.data.set}</Text>
        <Text> Rest: {props.data.rest} </Text>
     </TouchableOpacity>

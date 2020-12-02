@@ -64,7 +64,10 @@ export default class DownloadWorkout extends Component  {
     render(){
         return (
             <View style = {styles.container}>
-                <Text style = {styles.titleText}>{this.state.workoutName + " Workout"}</Text>
+                <Text 
+                  numberOfLines={1}
+                  adjustsFontSizeToFit
+                  style = {styles.titleText}>{this.state.workoutName + " Workout"}</Text>
                 <View style ={styles.list}>
                 <FlatList
                     data={this.state.listOfExercises}
