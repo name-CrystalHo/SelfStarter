@@ -194,7 +194,7 @@ render(){
                         style={{
                             backgroundColor: '#F7F7F8',
                             width: '100%',
-                            height: '85%',
+                            height: '91%',
                             alignItems: "center",
                         }}>
                         <Text style = {styles.dialogTitle}>
@@ -285,7 +285,7 @@ render(){
                    style={{
                        backgroundColor: '#F7F7F8',
                        width: '100%',
-                       height: '85%',
+                       height: '91%',
                        alignItems: "center",
                    }}>
                    <Text style = {styles.dialogTitle}>
@@ -340,6 +340,8 @@ render(){
             <View style ={styles.finishButton}>
                 <Button  onPress={()=>this.finishButton()}
                 title="Finish"></Button>
+            </View>
+            <View style ={styles.cancel2Button}>
                   <Button  onPress={()=>this.cancelButton()}
                 title="Cancel"></Button>
             </View>
@@ -404,7 +406,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         position: 'absolute',
-        top: '93%'
+        top: '87%'
     },
     finishText: {
        color: '#61D4D4',
@@ -458,6 +460,15 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginTop: '15%',
     },
+    cancel2Button: {
+        width: '45%',
+        height: 50,
+        // backgroundColor: "#A9A9B0", 
+        alignItems: "center",
+        justifyContent: "center",
+        position: 'absolute',
+        top: '92%'
+    }
 
 
 });
