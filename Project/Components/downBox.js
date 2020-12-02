@@ -16,8 +16,8 @@ const downBox = (props) => {
       <TouchableOpacity onPress={props.handleLike} activeOpacity={0.6}>
         <View style={styles.likeBox}>
           <Text>
-            Like!
-            </Text>
+            Like
+          </Text>
         </View>
       </TouchableOpacity>
     );
@@ -29,7 +29,7 @@ const downBox = (props) => {
 onPress={props.handleNavigate}
 >
    <Text>{props.data.key}</Text> 
-  <Text>Likes: {props.data.like}</Text>
+  <Text>♥: {props.data.like}</Text>
 </TouchableOpacity>
  </Swipeable>
 
