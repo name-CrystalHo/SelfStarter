@@ -41,7 +41,9 @@ export default class CreateWorkoutMenu extends Component  {
         const user = firebase.auth().currentUser;
         const uid = user.uid;
         const database = firebase.database();
-        database.ref('users/' + uid + "/" + this.state.workoutText).remove()        
+        if(this.state.workoutText!=""){
+        database.ref('users/' + uid + "/" + this.state.workoutText).remove() 
+        }       
         this.props.navigation.navigate('Main Menu') 
       };
      
