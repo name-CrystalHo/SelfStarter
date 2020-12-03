@@ -68,11 +68,12 @@ export default class Home extends Component{
       return(
       <View style={styles.container}>
          <Image style = {styles.logo} source={require('../assets/Logo.png')} />
-        <Text>Welcome to Self Start</Text>
+        <Text style = {styles.titleText}>Welcome to Self Start</Text>
+        
         <Button title="Go to Main Menu" 
         onPress={()=>this.props.navigation.navigate('Main Menu')}>
         </Button>
-        <Button title="Check Total Steps" 
+        <Button title="Check Pedometer" 
         onPress={()=>this.props.navigation.navigate('Pedometer')}>
         </Button>
         
@@ -95,5 +96,10 @@ const styles = StyleSheet.create({
     width: 200,
     position: 'absolute',
     top: '10%'
+  },
+  titleText: {
+    fontWeight: 'bold',
+    fontSize: 30,
+    marginBottom: '5%'
   }
 });

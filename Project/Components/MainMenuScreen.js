@@ -135,8 +135,8 @@ const styles = StyleSheet.create({
     titleText: {
         fontWeight: 'bold',
         fontSize: 40,
-        marginTop: '3%',
-        top: -30
+        marginTop: '2%',
+        
     },
 
     //Will use this later for lookup as well
