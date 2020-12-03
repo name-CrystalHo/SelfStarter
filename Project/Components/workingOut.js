@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
         textAlignVertical: "center",
         textAlign: "center",
         position: 'absolute',
-        top: '80%'
+        top: '85%'
     },
     startButton: {
         width: '45%',
