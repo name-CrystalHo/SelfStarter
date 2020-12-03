@@ -122,7 +122,7 @@ export default class StartWorkoutScreen extends Component  {
                 </View>
                 <Dialog
                width = {.7}
-               height = {.5}
+               height = {.7}
                visible={this.state.visible}
                onTouchOutside={() => {
                this.setState({ visible: false });
@@ -217,8 +217,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         justifyContent: "flex-start",
         alignItems: "center",
-        marginBottom: "10%",
-        marginTop: "10%"
+     //   marginBottom: "10%",
+     //   marginTop: "10%"
     },
     titleText: {
         fontWeight: 'bold',

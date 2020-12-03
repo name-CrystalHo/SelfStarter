@@ -254,7 +254,7 @@ render(){
                 {/* DIALOG FOR EDIT */}
                 <Dialog
                width = {.7}
-               height = {.5}
+               height = {.7}
                visible={this.state.visible}
                onTouchOutside={() => {
                this.setState({ visible: false });
@@ -359,8 +359,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         justifyContent: "flex-start",
         alignItems: "center",
-        marginBottom: "15%",
-        marginTop: "10%"
+      //  marginBottom: "15%",
+      //  marginTop: "10%"
     },
     titleText: {
         fontWeight: 'bold',
@@ -408,7 +408,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         position: 'absolute',
-        top: '87%'
+        top: '86%'
     },
     finishText: {
        color: '#61D4D4',

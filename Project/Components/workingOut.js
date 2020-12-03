@@ -2,6 +2,11 @@ import React, {Component} from "react";
 import { StyleSheet, Text, View, Image,Button, FlatList} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { firebase } from './config'
+import {Dimensions} from 'react-native';
+
+const {width, height} = Dimensions.get('window')
+
+const scale = size => width / 350 * size;
 
 export default class WorkingOutScreen extends Component  {
     constructor(props) {
@@ -152,9 +157,17 @@ export default class WorkingOutScreen extends Component  {
             <View style = {styles.container}>
                 <Text style = {styles.titleText}>{this.state.currentExerciseName}</Text>
                 <View style = {styles.details}>
-                    <Text style = {styles.title}>{"Sets: " + this.state.currentSetCount}</Text>
-                    <Text style = {styles.title}>{"Reps: " + this.state.currentRepCount}</Text>
-                    <Text style = {styles.title}>{"Rest Time: " + this.state.currentResttime + " seconds"}</Text>
+                    <Text style = {styles.title}>{"Sets:"}</Text>
+                    <Text style = {styles.stepText} numberOfLines={1}
+                  adjustsFontSizeToFit>{this.state.currentSetCount}</Text>
+                    <Text style = {styles.title}>{"Reps:"}</Text>
+                    <Text style = {styles.stepText} numberOfLines={1}
+                  adjustsFontSizeToFit>{this.state.currentRepCount}</Text>
+                    <Text style = {styles.title}>{"Rest Time:"}</Text>
+                    <Text style = {styles.totalCountText} numberOfLines={1}
+                  adjustsFontSizeToFit>{this.state.currentResttime + " seconds"}</Text>
+
+                    
                 </View>
                 {this.state.countPressed>1 && 
                         <Text style = {styles.rest}>{"Rest : " + this.state.countDownVar }</Text>
@@ -179,50 +192,59 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         justifyContent: "flex-start",
         alignItems: "center",
-        marginBottom: "10%",
-        marginTop: "10%"
+        
     },
     titleText: {
         fontWeight: 'bold',
-        fontSize: 30,
-        marginTop: '6%',
-        textAlignVertical: "center",
-        textAlign: "center",
+        fontSize: scale(40),
+        marginTop: '5%',
     },
     title: {
         fontWeight: 'bold',
-        fontSize: 25,
+        fontSize: scale(25),
         textAlignVertical: "center",
         textAlign: "center",
     },
     rest: {
         fontWeight: 'bold',
-        fontSize: 25,
+        fontSize: scale(25),
         textAlignVertical: "center",
         textAlign: "center",
         position: 'absolute',
-        top: '88%'
+        top: '80%'
     },
     startButton: {
         width: '45%',
-        height: 50,
+        height: scale(50),
         // backgroundColor: "#A9A9B0", 
         alignItems: "center",
         justifyContent: "center",
         position: 'absolute',
-        top: '80%'
+        top: '85%'
     },
     startText: {
        color: '#61D4D4',
        fontWeight: 'bold',
-       fontSize: 18
+       fontSize: scale(18)
     },
     details: {
-        width: '80%',
-        height: '40%',
+        width: '60%',
+        height: '30%',
         backgroundColor: "#fff", 
         alignItems: "center",
         justifyContent: "center",
-        marginTop: '15%',    
-    }
+        marginTop: '30%',    
+    },
+    stepText: {
+        fontWeight: 'bold',
+        fontSize: scale(60),
+        marginTop: '3%',
+        color: '#89cff0'
+      },
+      totalCountText: {
+        fontWeight: 'bold',
+        fontSize: scale(60),
+        marginTop: '3%',
+        color: '#FFB6C1'
+      },
 });

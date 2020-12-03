@@ -39,14 +39,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         justifyContent: "flex-start",
         alignItems: "center",
-        justifyContent: 'center',
-        marginBottom: "10%",
-        marginTop: "10%"
+        //justifyContent: 'center',
+     //   marginBottom: "10%",
+      //  marginTop: "10%"
     },
     titleText: {
         fontWeight: 'bold',
         fontSize: 40,
-        marginTop: '3%'
+        marginTop: '55%'
     },
     finishButton: {
         width: '55%',

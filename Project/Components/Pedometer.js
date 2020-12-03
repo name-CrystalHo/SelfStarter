@@ -1,7 +1,11 @@
 import React from 'react';
 import { Pedometer } from 'expo-sensors';
 import { StyleSheet, Text, View } from 'react-native';
+import {Dimensions} from 'react-native';
+const {width, height} = Dimensions.get('window')
 
+const scale = size => width / 350 * size;
+ 
 export default class PedometerScreen extends React.Component {
   state = {
     isPedometerAvailable: 'checking',
@@ -78,29 +82,29 @@ const styles = StyleSheet.create({
   },
   titleText: {
     fontWeight: 'bold',
-    fontSize: 20,
-    marginTop: '30%'
+    fontSize: scale(20),
+    marginTop: '10%'
   },
   stepText: {
     fontWeight: 'bold',
-    fontSize: 100,
+    fontSize: scale(100),
     marginTop: '3%',
     color: '#89cff0'
   },
   totalText: {
     fontWeight: 'bold',
-    fontSize: 20,
-    marginTop: '30%'
+    fontSize: scale(20),
+    marginTop: '10%'
   },
   totalCountText: {
     fontWeight: 'bold',
-    fontSize: 80,
+    fontSize: scale(80),
     marginTop: '3%',
     color: '#FFB6C1'
   },
   trueTitleText: {
     fontWeight: 'bold',
-    fontSize: 40,
+    fontSize: scale(40),
     marginTop: '15%',
   }
 });

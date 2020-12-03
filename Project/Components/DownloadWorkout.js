@@ -99,8 +99,8 @@ export default class DownloadWorkout extends Component  {
                 backgroundColor: '#fff',
                 justifyContent: "flex-start",
                 alignItems: "center",
-                marginBottom: "10%",
-                marginTop: "10%"
+           //     marginBottom: "10%",
+           //     marginTop: "10%"
             },
             
             myButton:{

@@ -106,8 +106,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       justifyContent: "flex-end",
       alignItems: "center",
-      marginBottom: "15%",
-      marginTop: "4%",
+     
     },
     newWorkoutButton: {
         width: '55%',
@@ -135,8 +134,8 @@ const styles = StyleSheet.create({
     titleText: {
         fontWeight: 'bold',
         fontSize: 40,
-        marginTop: '3%',
-        top: -30
+        marginTop: '2%',
+        
     },
 
     //Will use this later for lookup as well
