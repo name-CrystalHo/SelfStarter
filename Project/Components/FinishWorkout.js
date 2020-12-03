@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         alignItems: "center",
         //justifyContent: 'center',
-        marginBottom: "10%",
-        marginTop: "10%"
+     //   marginBottom: "10%",
+      //  marginTop: "10%"
     },
     titleText: {
         fontWeight: 'bold',

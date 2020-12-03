@@ -241,8 +241,8 @@ const styles = StyleSheet.create({
       backgroundColor: '#fff',
       justifyContent: "flex-end",
       alignItems: "center",
-      marginBottom: "15%",
-      marginTop: "4%",
+     // marginBottom: "15%",
+     // marginTop: "4%",
     },
     backContainer: {
         width: '90%',
